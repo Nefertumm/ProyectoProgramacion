@@ -12,7 +12,7 @@ float Producto::obtenerPrecio()
 	return _precio;
 }
 
-char* Producto::obtenerNombre()
+std::string Producto::obtenerNombre()
 {
 	return _nombre;
 }

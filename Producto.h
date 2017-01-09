@@ -6,11 +6,11 @@
 class Producto
 {
 	public:
-		Producto(int id, int cantidad, float precio, char* nombre) : _id(id), _cantidad(cantidad), _precio(precio), _nombre(nombre) { }
+		Producto(int id, int cantidad, float precio, std::string nombre) : _id(id), _cantidad(cantidad), _precio(precio), _nombre(nombre) { }
 		
 		int obtenerId();
 		float obtenerPrecio();
-		char* obtenerNombre();
+		std::string obtenerNombre();
 		int obtenerCantidad();
 		
 		
@@ -18,7 +18,7 @@ class Producto
 	protected:
 		int _id, _cantidad;
 		float _precio;
-		char* _nombre;
+		std::string _nombre;
 };
 
 #endif
