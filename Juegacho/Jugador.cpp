@@ -6,7 +6,7 @@ Jugador::Jugador() : _suelo(550), _velGravedad(0.1f), _isJumping(false) {
 		std::cerr << "No se pudo encontrar la textura" << std::endl;
 	
 	_sprite.setTexture(_texture);
-	_sprite.setScale(1.5f, 1.5f);
+	//_sprite.setScale(1.5f, 1.5f);
 	_sprite.setPosition(0.0f, _suelo);
 	
 	_direccion.x = 0.f;
@@ -20,6 +20,9 @@ Jugador::~Jugador() {
 
 void Jugador::Dibujar(sf::RenderWindow* wnd)
 {
+	sf::Vector2u wndSize = wnd->getSize();
+	_sprite.setScale((float)(wndSize.x / 451.f),(float)(wndSize.y / 338.4f)); // bastante acertado
+	//std::cout << _sprite.getScale().x << " " << _sprite.getScale().y << std::endl; // simplemente para ver la escala de la textura
 	wnd->draw(_sprite);
 }
 

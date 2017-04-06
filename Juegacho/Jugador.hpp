@@ -29,6 +29,7 @@ public:
 	void Izquierda();
 	
 	inline void estaSaltando(bool jumping) { _isJumping = jumping; }
+	inline bool isJumping() { return _isJumping; }
 	
 };
 
