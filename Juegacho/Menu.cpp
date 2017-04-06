@@ -4,8 +4,8 @@
 
 Menu::Menu(Game* game, RenderWindow* wnd): Escena(game, wnd) 
 {
-	if(!_fuente.loadFromFile("../resources/Equestria.otf")) 
-		cerr<<"No se encontro la fuente"<<endl;
+	if(!_fuente.loadFromFile("resources/Equestria.otf")) 
+		std::cerr<<"No se encontro la fuente"<<std::endl;
 	
 	_mensajeTitulo.setFont(_fuente);
 	_mensajeTitulo.setString("Injusticia hecha juego");
@@ -26,3 +26,28 @@ Menu::~Menu() {
 	
 }
 
+void Menu::Dibujar() 
+{ 
+	_wnd->clear(Color::Black);
+	_wnd->draw(_mensajeTitulo);
+	_wnd->draw(_mensajeMenu);
+	
+	_wnd->display();
+}
+
+void Menu::Actualizar(float dt) 
+{
+	
+}
+
+void Menu::ProcesarEventos() 
+{
+	sf::Event e;
+	while (_wnd->pollEvent(e))
+	{
+		if (e.type == Event::Closed)
+			_wnd->close();
+	}
+}
+
+void Menu::ProcesarColisiones() { }

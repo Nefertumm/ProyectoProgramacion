@@ -2,8 +2,8 @@
 #define GAME_HPP
 
 #include "Escena.hpp"
-#include <SFML/Graphics/RenderWindow.hpp>
-using namespace std;
+#include <SFML/Graphics.hpp>
+
 
 class Escena;
 
@@ -15,11 +15,7 @@ class Game {
 		
 		void CambiarEscena(Escena* nuevaEscena);
 	
-	protected:
-		void processEvents();
-		void update();
-		void render();
-		
+	protected:		
 		sf::RenderWindow* mWindow;
 		Escena* _escenaActual;
 		sf::Clock _clock;

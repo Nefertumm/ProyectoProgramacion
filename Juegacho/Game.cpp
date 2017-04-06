@@ -1,27 +1,31 @@
 #include "Game.hpp"
+#include <SFML/Graphics.hpp>
+#include "Menu.hpp"
 
 
 Game::Game()
 {
-	mWindow = new RenderWindow(sf::VideoMode(800,600),"Injusticia hecha juego");
+	mWindow = new RenderWindow(sf::VideoMode(800,600), "Injusticia hecha juego");
 	
+	_escenaActual = new Menu(this, mWindow);
 }
 
 void Game::run()
 {
-	while(mWindow.isOpen())
+	_clock.restart();
+	
+	while (mWindow->isOpen())
 	{
-		processEvents();
-		update();
-		render();
+		_escenaActual->ProcesarEventos();
+		_escenaActual->Actualizar(_clock.restart().asSeconds());
+		_escenaActual->ProcesarColisiones();
+		_escenaActual->Dibujar();
 	}
 }
 
-void Game::processEvents 
+Game::~Game() 
 {
-	sf::Event evento;
-	while(mWindow.pollEvent(evento))
-	{
-		
-	}
-};
+	delete mWindow;
+	if (_escenaActual != nullptr)
+		delete _escenaActual;
+}

@@ -1,7 +1,7 @@
-#ifndef ESCENA_H
-#define ESCENA_H
+#ifndef ESCENA_HPP
+#define ESCENA_HPP
 #include "Game.hpp"
-#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics.hpp>
 using namespace sf;
 
 class Game;
