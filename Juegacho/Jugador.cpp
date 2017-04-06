@@ -41,7 +41,7 @@ sf::FloatRect Jugador::Bounds()
 
 void Jugador::Saltar()
 {
-	// @ToDo: Poner un limite a cuanto en x puede moverse.
+	// @ToDo: Poner un limite a cuanto en y puede moverse.
 	_direccion.y -= 1.0f; // El eje coordenado no está como pensabamos, ahora todo cuadra. Esta intercambiado el eje y, cuando va para abajo es + y para arriba es -
 }
 
