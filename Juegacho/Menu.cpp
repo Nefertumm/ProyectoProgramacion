@@ -1,11 +1,19 @@
 #include "Menu.hpp"
 #include <iostream>
+#include "ZonaBoss.hpp"
 
 
 Menu::Menu(Game* game, RenderWindow* wnd): Escena(game, wnd) 
 {
 	if(!_fuente.loadFromFile("resources/Equestria.otf")) 
-		std::cerr<<"No se encontro la fuente"<<std::endl;
+		std::cerr << "No se encontro la fuente" << std::endl;
+	
+	if (!_music.openFromFile("resources/menu.ogg"))
+		std::cerr << "No se encontro el archivo de audio" << std::endl;
+	
+	_music.setVolume(100.f);
+	_music.setLoop(true);
+	_music.play();
 	
 	_mensajeTitulo.setFont(_fuente);
 	_mensajeTitulo.setString("Injusticia hecha juego");
@@ -37,7 +45,9 @@ void Menu::Dibujar()
 
 void Menu::Actualizar(float dt) 
 {
-	
+	if ((Keyboard::isKeyPressed(Keyboard::F) && Keyboard::isKeyPressed(Keyboard::Num1) && Keyboard::isKeyPressed(Keyboard::Num3)) ||
+		(Keyboard::isKeyPressed(Keyboard::F) && Keyboard::isKeyPressed(Keyboard::Numpad1) && Keyboard::isKeyPressed(Keyboard::Numpad3))) // Huevada in coming...
+		_game->CambiarEscena(new ZonaBoss(_game, _wnd));
 }
 
 void Menu::ProcesarEventos() 

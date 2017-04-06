@@ -16,7 +16,7 @@ class Game {
 		void CambiarEscena(Escena* nuevaEscena);
 	
 	protected:		
-		sf::RenderWindow* mWindow;
+		sf::RenderWindow* wnd;
 		Escena* _escenaActual;
 		sf::Clock _clock;
 		

@@ -5,16 +5,16 @@
 
 Game::Game()
 {
-	mWindow = new RenderWindow(sf::VideoMode(800,600), "Injusticia hecha juego");
+	wnd = new RenderWindow(sf::VideoMode(800,600), "Injusticia hecha juego");
 	
-	_escenaActual = new Menu(this, mWindow);
+	_escenaActual = new Menu(this, wnd);
 }
 
 void Game::run()
 {
 	_clock.restart();
 	
-	while (mWindow->isOpen())
+	while (wnd->isOpen())
 	{
 		_escenaActual->ProcesarEventos();
 		_escenaActual->Actualizar(_clock.restart().asSeconds());
@@ -25,7 +25,15 @@ void Game::run()
 
 Game::~Game() 
 {
-	delete mWindow;
+	delete wnd;
 	if (_escenaActual != nullptr)
 		delete _escenaActual;
+}
+
+void Game::CambiarEscena(Escena* nuevaEscena)
+{
+	if (_escenaActual != nullptr)
+		delete _escenaActual;
+	
+	_escenaActual = nuevaEscena;
 }
