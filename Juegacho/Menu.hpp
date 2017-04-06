@@ -1,15 +1,17 @@
 #ifndef MENU_H
 #define MENU_H
 #include "Escena.hpp"
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 
 class Menu : public Escena {
 
 protected:
 	sf::Font _fuente;
-	sf::Text mensajeTitulo;
-	sf::Text mensajeMenu;
+	sf::Text _mensajeTitulo;
+	sf::Text _mensajeMenu;
 	
 public:
 	Menu(Game* game, RenderWindow* wnd);

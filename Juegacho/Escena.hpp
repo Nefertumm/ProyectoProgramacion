@@ -1,6 +1,7 @@
 #ifndef ESCENA_H
 #define ESCENA_H
 #include "Game.hpp"
+#include <SFML/Graphics/RenderWindow.hpp>
 using namespace sf;
 
 class Game;
@@ -8,7 +9,7 @@ class Game;
 class Escena {
 protected:
 	Game* _game;
-	RenderWindow _wnd;
+	RenderWindow* _wnd;
 	
 	void Reiniciar();
 public:

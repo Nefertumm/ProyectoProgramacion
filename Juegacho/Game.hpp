@@ -1,7 +1,8 @@
 #ifndef GAME_HPP
 #define GAME_HPP
-#include <SFML/Graphics/RenderWindow>
+
 #include "Escena.hpp"
+#include <SFML/Graphics/RenderWindow.hpp>
 using namespace std;
 
 class Escena;

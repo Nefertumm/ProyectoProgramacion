@@ -3,7 +3,7 @@
 
 Game::Game()
 {
-	mWindow = new RenderWindow(sf::VideoMode(800,600),"Proyecto Poo");
+	mWindow = new RenderWindow(sf::VideoMode(800,600),"Injusticia hecha juego");
 	
 }
 
