@@ -29,10 +29,6 @@ void ZonaBoss::ProcesarEventos()
 			case sf::Event::Closed:
 				_wnd->close();
 				break;
-			
-			case sf::Event::KeyReleased:
-				_jugador.estaSaltando(false);
-				break;
 			default:
 				break;
 		}

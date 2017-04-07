@@ -9,13 +9,13 @@ protected:
 	sf::Sprite _sprite;
 	
 	sf::Vector2f _velocidad;
-	sf::Vector2u _wndSize;
 	
 	//Variables de gravedad:
 	float _velGravedad;
 	int _suelo;
 	bool _isJumping;
 	float _dSalto;
+	float _movementSpeed;
 	
 public:
 	Jugador();
