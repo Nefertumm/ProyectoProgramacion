@@ -12,10 +12,12 @@ protected:
 	sf::Text _mensajeTitulo;
 	sf::Text _mensajeMenu;
 	sf::Music _music;
+
 	
 public:
 	Menu(Game* game, RenderWindow* wnd);
 	~Menu();
+	
 	
 	void Dibujar();
 	void Actualizar(float dt);

@@ -3,6 +3,7 @@
 #include "ZonaBoss.hpp"
 
 
+
 Menu::Menu(Game* game, RenderWindow* wnd): Escena(game, wnd) 
 {
 	if(!_fuente.loadFromFile("resources/Equestria.otf")) 
@@ -28,6 +29,7 @@ Menu::Menu(Game* game, RenderWindow* wnd): Escena(game, wnd)
 	_mensajeMenu.setColor(Color::Red);
 	_mensajeMenu.setOrigin(_mensajeMenu.getGlobalBounds().width/2.0f, _mensajeMenu.getGlobalBounds().height/2.0f);
 	_mensajeMenu.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/2.0f);
+	
 }
 
 Menu::~Menu() {
@@ -61,3 +63,6 @@ void Menu::ProcesarEventos()
 }
 
 void Menu::ProcesarColisiones() { }
+
+
+

@@ -8,13 +8,14 @@ protected:
 	sf::Texture _texture;
 	sf::Sprite _sprite;
 	
-	float _velocidad;
-	sf::Vector2f _direccion;
+	sf::Vector2f _velocidad;
+	sf::Vector2u _wndSize;
 	
 	//Variables de gravedad:
 	float _velGravedad;
 	int _suelo;
 	bool _isJumping;
+	float _dSalto;
 	
 public:
 	Jugador();
@@ -23,10 +24,6 @@ public:
 	void Dibujar(sf::RenderWindow* wnd);
 	void Actualizar(float dt);
 	sf::FloatRect Bounds();
-	
-	void Saltar();
-	void Derecha();
-	void Izquierda();
 	
 	inline void estaSaltando(bool jumping) { _isJumping = jumping; }
 	inline bool isJumping() { return _isJumping; }

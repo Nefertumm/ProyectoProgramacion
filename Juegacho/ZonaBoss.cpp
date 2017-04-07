@@ -9,24 +9,9 @@ ZonaBoss::~ZonaBoss() { }
 
 void ZonaBoss::Dibujar() 
 {
-	_wnd->clear();
+	_wnd->clear(sf::Color::White);
 	_jugador.Dibujar(_wnd);
 	_wnd->display();
-}
-
-void ZonaBoss::Actualizar(float dt)
-{
-	if (Keyboard::isKeyPressed(Keyboard::Left))
-		_jugador.Izquierda();
-	if (Keyboard::isKeyPressed(Keyboard::Right))
-		_jugador.Derecha();
-	if (Keyboard::isKeyPressed(Keyboard::Up))
-	{
-		_jugador.Saltar();
-		_jugador.estaSaltando(true);
-	}
-	
-	_jugador.Actualizar(dt);
 }
 
 void ZonaBoss::ProcesarColisiones()
@@ -47,6 +32,9 @@ void ZonaBoss::ProcesarEventos()
 			
 			case sf::Event::KeyReleased:
 				_jugador.estaSaltando(false);
+				break;
+			default:
+				break;
 		}
 	}
 }

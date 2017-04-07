@@ -25,7 +25,7 @@ public:
 	void Reiniciar();
 	
 	void Dibujar();
-	void Actualizar(float dt);
+	inline void Actualizar(float dt) { _jugador.Actualizar(dt); }
 	void ProcesarColisiones();
 	void ProcesarEventos();
 	
