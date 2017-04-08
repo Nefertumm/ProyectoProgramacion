@@ -7,7 +7,8 @@
 
 class Escena;
 
-class Game {
+class Game 
+{
 	public:
 		Game();
 		void run();

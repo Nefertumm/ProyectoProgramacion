@@ -3,7 +3,7 @@
 #include <cmath>
 using namespace std;
 
-Jugador::Jugador() : _suelo(550), _velGravedad(1800.f), _isJumping(false), _dSalto(150.0f), _movementSpeed(300.f) {
+Jugador::Jugador() : _velGravedad(1800.f), _isJumping(false), _dSalto(150.0f), _movementSpeed(300.f) {
 	if (!_texture.loadFromFile("resources/idle.png"))
 		std::cerr << "No se pudo encontrar la textura" << std::endl;
 	

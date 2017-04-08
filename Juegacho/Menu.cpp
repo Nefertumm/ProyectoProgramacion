@@ -12,7 +12,7 @@ Menu::Menu(Game* game, RenderWindow* wnd): Escena(game, wnd)
 	if (!_music.openFromFile("resources/menu.ogg"))
 		std::cerr << "No se encontro el archivo de audio" << std::endl;
 	
-	_music.setVolume(100.f);
+	_music.setVolume(100);
 	_music.setLoop(true);
 	_music.play();
 	

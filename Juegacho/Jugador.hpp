@@ -3,19 +3,19 @@
 #include <SFML/Graphics.hpp>
 
 
-class Jugador {
+class Jugador 
+{
 protected:
 	sf::Texture _texture;
 	sf::Sprite _sprite;
-	
-	sf::Vector2f _velocidad;
+	const float _suelo = 550.f;
 	
 	//Variables de gravedad:
 	float _velGravedad;
-	int _suelo;
 	bool _isJumping;
 	float _dSalto;
 	float _movementSpeed;
+	sf::Vector2f _velocidad;
 	
 public:
 	Jugador();

@@ -5,7 +5,8 @@
 #include <SFML/Audio.hpp>
 
 
-class Menu : public Escena {
+class Menu : public Escena 
+{
 
 protected:
 	sf::Font _fuente;

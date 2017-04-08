@@ -1,8 +1,14 @@
 #include "ZonaBoss.hpp"
+#include <iostream>
 
 ZonaBoss::ZonaBoss(Game* game, sf::RenderWindow* wnd) : Escena(game, wnd) 
 {
+	if (!_ambiente.openFromFile("resources/boss.ogg"))
+		std::cerr << "No se pudo cargar la musica del boss." << std::endl;
 	
+	_ambiente.setVolume(0); // cambiar a 100 cuando ya este hecho.
+	_ambiente.setLoop(true);
+	_ambiente.play();
 }
 
 ZonaBoss::~ZonaBoss() { }

@@ -6,7 +6,8 @@ using namespace sf;
 
 class Game;
 
-class Escena {
+class Escena 
+{
 protected:
 	Game* _game;
 	RenderWindow* _wnd;
