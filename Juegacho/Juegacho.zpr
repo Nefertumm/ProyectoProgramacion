@@ -13,7 +13,7 @@ version_required=20140318
 custom_tabs=0
 tab_use_spaces=0
 explorer_path=
-current_source=Animaciones.hpp
+current_source=Jugador.hpp
 path_char=\
 [source]
 path=main.cpp
@@ -33,7 +33,7 @@ cursor=14:21
 open=true
 [source]
 path=Jugador.cpp
-cursor=35:32
+cursor=65:75
 open=true
 [source]
 path=ZonaBoss.cpp
@@ -57,7 +57,7 @@ cursor=8:0
 open=true
 [header]
 path=Jugador.hpp
-cursor=6:0
+cursor=9:20
 open=true
 [header]
 path=ZonaBoss.hpp

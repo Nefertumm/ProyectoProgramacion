@@ -4,16 +4,18 @@
 using namespace std;
 
 Jugador::Jugador() : _velGravedad(1800.f), _isJumping(false), _dSalto(150.0f), _movementSpeed(300.f) {
-	if (!_texture.loadFromFile("resources/idle.png"))
+	
+	
+	if (!_texture.loadFromFile("resources/sprites.png"))
 		std::cerr << "No se pudo encontrar la textura" << std::endl;
 	
 	_sprite.setTexture(_texture);
-	//_sprite.setScale(1.5f, 1.5f);
+	_sprite.setTextureRect(sf::IntRect(0.f,0.f,130.f,130.f));
+	
 	_sprite.setPosition(0.0f, _suelo);
 	
 	_velocidad = { 0.f, 0.f };
-	//_sprite.setScale((float)(_wndSize.x / 451.f),(float)(_wndSize.y / 338.4f)); // bastante acertado
-	_sprite.setScale({2, 2});
+	_sprite.setScale({0.4, 0.4});
 }
 
 Jugador::~Jugador() {
@@ -22,8 +24,6 @@ Jugador::~Jugador() {
 
 void Jugador::Dibujar(sf::RenderWindow* wnd)
 {
-	
-	//std::cout << _sprite.getScale().x << " " << _sprite.getScale().y << std::endl; // simplemente para ver la escala de la textura
 	wnd->draw(_sprite);
 }
 
@@ -63,8 +63,8 @@ void Jugador::Actualizar(float dt)
 	
 	if (_sprite.getPosition().x <= 0.f)
 		_sprite.setPosition( sf::Vector2f(0.f, _sprite.getPosition().y) );
-	else if (_sprite.getPosition().x > (800 - _sprite.getTexture()->getSize().x * _sprite.getScale().x))
-		_sprite.setPosition( sf::Vector2f(800 - _sprite.getTexture()->getSize().x * _sprite.getScale().x, _sprite.getPosition().y) );
+	else if (_sprite.getPosition().x > (800 - _sprite.getTextureRect().width/2))
+		_sprite.setPosition( sf::Vector2f(800 - _sprite.getTextureRect().width/2, _sprite.getPosition().y) );
 	
 }
 
