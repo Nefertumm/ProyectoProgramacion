@@ -24,10 +24,10 @@ public:
 	void Dibujar(sf::RenderWindow* wnd);
 	void Actualizar(float dt);
 	sf::FloatRect Bounds();
+	void mantenerJugadorEnPantalla();
 	
-	inline void estaSaltando(bool jumping) { _isJumping = jumping; }
+	inline sf::Vector2f getVelocidad() { return _velocidad; } // Nos va a servir para más tarde..
 	inline bool isJumping() { return _isJumping; }
-	
 };
 
 #endif

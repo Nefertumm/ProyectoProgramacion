@@ -38,7 +38,7 @@ void Jugador::Actualizar(float dt)
 		_velocidad.x = 0;
 	
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !_isJumping) // es una pija
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !_isJumping)
 	{
 		_isJumping = true;
 		_velocidad.y = (float)-sqrt(2.0f * _velGravedad * _dSalto);
@@ -57,18 +57,21 @@ void Jugador::Actualizar(float dt)
 	}
 	cout<<_velocidad.x<<" "<<_sprite.getPosition().x<<endl;
 	
-	
 	_sprite.move(_velocidad * dt);
-
 	
-	if (_sprite.getPosition().x <= 0.f)
-		_sprite.setPosition( sf::Vector2f(0.f, _sprite.getPosition().y) );
-	else if (_sprite.getPosition().x > (800 - _sprite.getTextureRect().width/2))
-		_sprite.setPosition( sf::Vector2f(800 - _sprite.getTextureRect().width/2, _sprite.getPosition().y) );
+	mantenerJugadorEnPantalla();
 	
 }
 
 sf::FloatRect Jugador::Bounds()
 {
 	return _sprite.getGlobalBounds();
+}
+
+void Jugador::mantenerJugadorEnPantalla() 
+{
+	if (_sprite.getPosition().x <= 0.f)
+		_sprite.setPosition( sf::Vector2f(0.f, _sprite.getPosition().y) );
+	else if (_sprite.getPosition().x > (800 - _sprite.getTextureRect().width/2))
+		_sprite.setPosition( sf::Vector2f(800 - _sprite.getTextureRect().width/2, _sprite.getPosition().y) );
 }
