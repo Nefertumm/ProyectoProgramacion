@@ -5,7 +5,7 @@
 
 Game::Game()
 {
-	wnd = new RenderWindow(sf::VideoMode(800,600), "Injusticia hecha juego");
+	wnd = new RenderWindow(sf::VideoMode(800,600), "Injusticia hecha juego", sf::Style::Titlebar|sf::Style::Close);
 	wnd->setFramerateLimit(60);
 	
 	_escenaActual = new Menu(this, wnd);

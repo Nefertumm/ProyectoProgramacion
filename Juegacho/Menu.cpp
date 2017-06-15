@@ -1,16 +1,16 @@
 #include "Menu.hpp"
 #include <iostream>
 #include "ZonaBoss.hpp"
-
+#include "EscenaPuntuacion.hpp"
 
 
 Menu::Menu(Game* game, RenderWindow* wnd): Escena(game, wnd) 
 {
 	if(!_fuente.loadFromFile("resources/Equestria.otf")) 
-		std::cerr << "No se encontro la fuente" << std::endl;
+		std::cerr << "No se encontro la fuente del menu" << std::endl;
 	
 	if (!_music.openFromFile("resources/menu.ogg"))
-		std::cerr << "No se encontro el archivo de audio" << std::endl;
+		std::cerr << "No se encontro el archivo de audio del menu" << std::endl;
 	
 	_music.setVolume(100);
 	_music.setLoop(true);
@@ -30,6 +30,19 @@ Menu::Menu(Game* game, RenderWindow* wnd): Escena(game, wnd)
 	_mensajeMenu.setOrigin(_mensajeMenu.getGlobalBounds().width/2.0f, _mensajeMenu.getGlobalBounds().height/2.0f);
 	_mensajeMenu.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/2.0f);
 	
+	_mensajeScore.setFont(_fuente);
+	_mensajeScore.setString("Presione la tecla X para ver las puntuaciones");
+	_mensajeScore.setCharacterSize(26);
+	_mensajeScore.setColor(Color::Red);
+	_mensajeScore.setOrigin(_mensajeScore.getGlobalBounds().width/2.0f, _mensajeScore.getGlobalBounds().height/2.0f);
+	_mensajeScore.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/1.8f);
+	
+	_mensajeSalir.setFont(_fuente);
+	_mensajeSalir.setString("Presione la tecla F1 para salir");
+	_mensajeSalir.setCharacterSize(26);
+	_mensajeSalir.setColor(Color::White);
+	_mensajeSalir.setOrigin(_mensajeSalir.getGlobalBounds().width/2.0f, _mensajeSalir.getGlobalBounds().height/2.0f);
+	_mensajeSalir.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/1.6f);
 }
 
 Menu::~Menu() {
@@ -41,6 +54,8 @@ void Menu::Dibujar()
 	_wnd->clear(Color::Black);
 	_wnd->draw(_mensajeTitulo);
 	_wnd->draw(_mensajeMenu);
+	_wnd->draw(_mensajeScore);
+	_wnd->draw(_mensajeSalir);
 	
 	_wnd->display();
 }
@@ -50,6 +65,10 @@ void Menu::Actualizar(float dt)
 	if ((Keyboard::isKeyPressed(Keyboard::F) && Keyboard::isKeyPressed(Keyboard::Num1) && Keyboard::isKeyPressed(Keyboard::Num3)) ||
 		(Keyboard::isKeyPressed(Keyboard::F) && Keyboard::isKeyPressed(Keyboard::Numpad1) && Keyboard::isKeyPressed(Keyboard::Numpad3))) // Huevada in coming...
 		_game->CambiarEscena(new ZonaBoss(_game, _wnd));
+	if (Keyboard::isKeyPressed(Keyboard::X))
+		_game->CambiarEscena(new EscenaPuntuacion(_game, _wnd));
+	if (Keyboard::isKeyPressed(Keyboard::F1))
+		_wnd->close();
 }
 
 void Menu::ProcesarEventos() 

@@ -1,5 +1,5 @@
-#ifndef MENU_H
-#define MENU_H
+#ifndef MENU_HPP
+#define MENU_HPP
 #include "Escena.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
@@ -12,6 +12,8 @@ protected:
 	sf::Font _fuente;
 	sf::Text _mensajeTitulo;
 	sf::Text _mensajeMenu;
+	sf::Text _mensajeScore;
+	sf::Text _mensajeSalir;
 	sf::Music _music;
 
 	

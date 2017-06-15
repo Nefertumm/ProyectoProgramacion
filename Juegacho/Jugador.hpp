@@ -28,6 +28,7 @@ public:
 	
 	inline sf::Vector2f getVelocidad() { return _velocidad; } // Nos va a servir para más tarde..
 	inline bool isJumping() { return _isJumping; }
+	inline sf::Sprite getSprite() { return _sprite; }
 };
 
 #endif
