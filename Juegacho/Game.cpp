@@ -1,7 +1,9 @@
 #include "Game.hpp"
 #include <SFML/Graphics.hpp>
 #include "Menu.hpp"
-
+#include <fstream>
+#include <iostream>
+using namespace std;
 
 Game::Game()
 {
@@ -9,6 +11,15 @@ Game::Game()
 	wnd->setFramerateLimit(60);
 	
 	_escenaActual = new Menu(this, wnd);
+	
+	// Si el archivo no está creado, crearlo.
+	ifstream archi("puntaje.dat", ios::binary);
+	if (!archi.is_open())
+	{
+		cerr << "No se encuentra el archivo puntaje.dat" << endl;
+		ofstream archiCrear("puntaje.dat", ios::binary|ios::trunc);
+		return;
+	}
 }
 
 void Game::run()

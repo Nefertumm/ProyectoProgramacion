@@ -65,7 +65,7 @@ void EscenaGameOver::ProcesarEventos()
 				_puntJugador._nombre = string_ingresado;
 			
 			ifstream archiLeer("puntaje.dat", ios::binary|ios::ate);
-			if (!archiLeer.isOpen())
+			if (!archiLeer.is_open())
 				return;
 			archiLeer.seekg(0);
 			
