@@ -5,6 +5,7 @@
 #include "Escena.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <string>
 
 class EscenaPuntuacion : public Escena
 {
@@ -12,7 +13,9 @@ class EscenaPuntuacion : public Escena
 protected:
 	sf::Font _fuente;
 	sf::Text _volverMenu;
-	std::vector<sf::Text> _puntuaciones; // no estoy seguro.
+	sf::Text _textPuntuaciones;
+	sf::Text _tituloPuntuaciones;
+	std::vector<Puntuacion> _puntuaciones;
 	
 public:
 	EscenaPuntuacion(Game* game, sf::RenderWindow* wnd);
@@ -22,7 +25,6 @@ public:
 	void Actualizar(float dt);
 	void ProcesarColisiones() { }
 	void ProcesarEventos();
-	
 };
 
 #endif

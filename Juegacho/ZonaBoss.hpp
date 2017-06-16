@@ -15,8 +15,10 @@ class ZonaBoss : public Escena
 {
 protected:
 	sf::Music _ambiente;
-	
+	sf::Text _textPuntaje;
+	sf::Font _fuentePuntaje;
 	Jugador _jugador;
+	float score;
 	
 public:
 	ZonaBoss(Game* game, sf::RenderWindow* wnd);
@@ -25,11 +27,11 @@ public:
 	void Reiniciar();
 	
 	void Dibujar();
-	inline void Actualizar(float dt) { _jugador.Actualizar(dt); }
+	void Actualizar(float dt);
 	void ProcesarColisiones();
 	void ProcesarEventos();
 	
-	void GameOver();
+	void GameOver(int score);
 };
 
 #endif

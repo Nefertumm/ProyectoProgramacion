@@ -38,7 +38,7 @@ Menu::Menu(Game* game, RenderWindow* wnd): Escena(game, wnd)
 	_mensajeScore.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/1.8f);
 	
 	_mensajeSalir.setFont(_fuente);
-	_mensajeSalir.setString("Presione la tecla F1 para salir");
+	_mensajeSalir.setString("Presione la tecla Escape para salir");
 	_mensajeSalir.setCharacterSize(26);
 	_mensajeSalir.setColor(Color::White);
 	_mensajeSalir.setOrigin(_mensajeSalir.getGlobalBounds().width/2.0f, _mensajeSalir.getGlobalBounds().height/2.0f);
@@ -67,7 +67,7 @@ void Menu::Actualizar(float dt)
 		_game->CambiarEscena(new ZonaBoss(_game, _wnd));
 	if (Keyboard::isKeyPressed(Keyboard::X))
 		_game->CambiarEscena(new EscenaPuntuacion(_game, _wnd));
-	if (Keyboard::isKeyPressed(Keyboard::F1))
+	if (Keyboard::isKeyPressed(Keyboard::Escape))
 		_wnd->close();
 }
 

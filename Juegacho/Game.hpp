@@ -4,6 +4,11 @@
 #include "Escena.hpp"
 #include <SFML/Graphics.hpp>
 
+struct Puntuacion
+{
+	std::string _nombre = "AAAAAAAA";
+	int _puntos = 0;
+};
 
 class Escena;
 

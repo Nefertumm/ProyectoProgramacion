@@ -1,14 +1,23 @@
 #include "ZonaBoss.hpp"
+#include "EscenaGameOver.hpp"
 #include <iostream>
+#include <sstream>
 
-ZonaBoss::ZonaBoss(Game* game, sf::RenderWindow* wnd) : Escena(game, wnd) 
+ZonaBoss::ZonaBoss(Game* game, sf::RenderWindow* wnd) : Escena(game, wnd)
 {
 	if (!_ambiente.openFromFile("resources/boss.ogg"))
 		std::cerr << "No se pudo cargar la musica del boss." << std::endl;
+	if (!_fuentePuntaje.loadFromFile("resources/arial.ttf"))
+		std::cerr << "No se pudo cargar el archivo fuente" << std::endl;
+	score = 0;
 	
 	_ambiente.setVolume(0); // cambiar a 100 cuando ya este hecho.
 	_ambiente.setLoop(true);
 	_ambiente.play();
+	
+	_textPuntaje.setFont(_fuentePuntaje);
+	_textPuntaje.setColor(Color::Black);
+	
 }
 
 ZonaBoss::~ZonaBoss() { }
@@ -50,6 +59,7 @@ bool sat_test(const sf::Sprite &sp1, const sf::Sprite &sp2, sf::Vector2f *out_mt
 void ZonaBoss::Dibujar() 
 {
 	_wnd->clear(sf::Color::White);
+	_wnd->draw(_textPuntaje);
 	_jugador.Dibujar(_wnd);
 	_wnd->display();
 }
@@ -80,7 +90,20 @@ void ZonaBoss::Reiniciar()
 	
 }
 
-void ZonaBoss::GameOver()
+void ZonaBoss::GameOver(int score)
 {
+	_game->CambiarEscena(new EscenaGameOver(_game, _wnd, score));
+}
+
+void ZonaBoss::Actualizar(float dt)
+{
+	score += dt;
+	std::stringstream sc;
+	sc << "Score: " << int(score);
+	_textPuntaje.setString(sc.str());
 	
+	_jugador.Actualizar(dt);
+	
+	if (sf::Keyboard::isKeyPressed(Keyboard::L))
+		GameOver(score);
 }
