@@ -7,9 +7,10 @@ using namespace std;
 
 Game::Game()
 {
-	wnd = new RenderWindow(sf::VideoMode(800,600), "Injusticia hecha juego", sf::Style::Titlebar|sf::Style::Close);
-	wnd->setFramerateLimit(60);
+	wnd = new RenderWindow(sf::VideoMode(800,600), "Injusticia hecha juego"/*, sf::Style::Titlebar|sf::Style::Close*/);
+	//wnd->setFramerateLimit(60);
 	
+	_escenaAnterior = nullptr;
 	_escenaActual = new Menu(this, wnd);
 	
 	// Si el archivo no está creado, crearlo.
@@ -32,20 +33,20 @@ void Game::run()
 		_escenaActual->Actualizar(_clock.restart().asSeconds());
 		_escenaActual->ProcesarColisiones();
 		_escenaActual->Dibujar();
+		delete _escenaAnterior; _escenaAnterior = nullptr;
 	}
 }
 
 Game::~Game() 
 {
 	delete wnd;
-	if (_escenaActual != nullptr)
-		delete _escenaActual;
+	delete _escenaActual;
 }
 
 void Game::CambiarEscena(Escena* nuevaEscena)
 {
-	if (_escenaActual != nullptr)
-		delete _escenaActual;
-	
+//	if (_escenaActual != nullptr)
+//	  	delete _escenaActual;
+	_escenaAnterior = _escenaActual;
 	_escenaActual = nuevaEscena;
 }

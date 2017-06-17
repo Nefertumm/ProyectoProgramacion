@@ -24,6 +24,7 @@ class Game
 	protected:		
 		sf::RenderWindow* wnd;
 		Escena* _escenaActual;
+		Escena* _escenaAnterior;
 		sf::Clock _clock;
 		
 };
