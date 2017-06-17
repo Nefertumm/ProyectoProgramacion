@@ -19,8 +19,10 @@ Game::Game()
 	{
 		cerr << "No se encuentra el archivo puntaje.dat" << endl;
 		ofstream archiCrear("puntaje.dat", ios::binary|ios::trunc);
+		archiCrear.close();
 		return;
 	}
+	archi.close();
 }
 
 void Game::run()

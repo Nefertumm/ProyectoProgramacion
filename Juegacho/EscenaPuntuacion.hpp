@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <string>
+#include "ManejoPuntuacion.hpp"
 
 class EscenaPuntuacion : public Escena
 {

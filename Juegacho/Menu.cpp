@@ -45,9 +45,7 @@ Menu::Menu(Game* game, RenderWindow* wnd): Escena(game, wnd)
 	_mensajeSalir.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/1.6f);
 }
 
-Menu::~Menu() {
-	
-}
+Menu::~Menu() { }
 
 void Menu::Dibujar() 
 { 

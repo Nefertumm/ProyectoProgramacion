@@ -7,8 +7,7 @@
 EscenaPuntuacion::EscenaPuntuacion(Game* game, sf::RenderWindow* wnd) : Escena(game, wnd) 
 {
 	if (!_fuente.loadFromFile("resources/Equestria.otf"))
-		std::cerr << "No se pudo cargar la fuente de la tabla de puntuaciones" << std::endl;
-	_puntuaciones.resize(5);	
+		std::cerr << "No se pudo cargar la fuente de la tabla de puntuaciones" << std::endl;	
 	
 	_tituloPuntuaciones.setFont(_fuente);
 	_tituloPuntuaciones.setString("Tabla de puntuaciones");
@@ -17,8 +16,13 @@ EscenaPuntuacion::EscenaPuntuacion(Game* game, sf::RenderWindow* wnd) : Escena(g
 	_tituloPuntuaciones.setOrigin(_tituloPuntuaciones.getGlobalBounds().width/2.0f, _tituloPuntuaciones.getGlobalBounds().height/2.0f);
 	_tituloPuntuaciones.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/8.0f);
 	
+	// Esto no esta levantando bien los datos del archivo por algun motivo...
+	ManejoPuntuacion manPun;
+	for(int i=0;i<_puntuaciones.size();i++) 
+		_puntuaciones[i] = manPun.verPuntaje(i);
+	
 	std::stringstream ss;
-	for(int i=0;i<_puntuaciones.size();i++)
+	for(int i=0;i<int(_puntuaciones.size());i++)
 		ss << _puntuaciones[i]._nombre << "      -      " << _puntuaciones[i]._puntos << std::endl;
 	std::string str = ss.str();
 	
@@ -37,10 +41,7 @@ EscenaPuntuacion::EscenaPuntuacion(Game* game, sf::RenderWindow* wnd) : Escena(g
 	_volverMenu.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/1.1f);
 }
 
-EscenaPuntuacion::~EscenaPuntuacion() 
-{
-	
-}
+EscenaPuntuacion::~EscenaPuntuacion() { }
 
 void EscenaPuntuacion::Dibujar() 
 {

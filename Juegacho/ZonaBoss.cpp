@@ -85,10 +85,7 @@ void ZonaBoss::ProcesarEventos()
 	}
 }
 
-void ZonaBoss::Reiniciar()
-{
-	
-}
+void ZonaBoss::Reiniciar() { }
 
 void ZonaBoss::GameOver(int score)
 {

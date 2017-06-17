@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "resources/InputBox.h"
+#include "ManejoPuntuacion.hpp"
 
 class EscenaGameOver : public Escena
 {

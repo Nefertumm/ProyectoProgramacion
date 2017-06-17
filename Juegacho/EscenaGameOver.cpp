@@ -45,10 +45,7 @@ void EscenaGameOver::Dibujar()
 	
 	_wnd->display();
 }
-void EscenaGameOver::Actualizar(float dt)
-{
-	
-}
+void EscenaGameOver::Actualizar(float dt) { }
 
 void EscenaGameOver::ProcesarEventos()
 {
@@ -64,11 +61,8 @@ void EscenaGameOver::ProcesarEventos()
 			else 
 				_puntJugador._nombre = string_ingresado;
 			
-			ifstream archiLeer("puntaje.dat", ios::binary|ios::ate);
-			if (!archiLeer.is_open())
-				return;
-			archiLeer.seekg(0);
-			
+			ManejoPuntuacion manPun;
+			manPun.registrarPuntuacion(_puntJugador);
 			
 			_game->CambiarEscena(new Menu(_game, _wnd));
 		} else _nombre.processEvent(e);
