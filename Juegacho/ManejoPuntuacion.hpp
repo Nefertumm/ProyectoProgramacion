@@ -9,8 +9,8 @@ using namespace std;
 
 struct Puntuacion
 {
-	std::string _nombre;
-	int _puntos;
+	std::string _nombre = "AAAAAAAA";
+	int _puntos = 0;
 };
 
 inline bool operator<(const Puntuacion &p1, const Puntuacion &p2)
@@ -20,8 +20,8 @@ inline bool operator<(const Puntuacion &p1, const Puntuacion &p2)
 
 struct Puntuacion_Aux
 {
-	char _nombre[15];
-	int _puntos;
+	char _nombre[15] = "AAAAAAAA";
+	int _puntos = 0;
 };
 
 class ManejoPuntuacion 
@@ -36,9 +36,7 @@ public:
 	Puntuacion pasar_a_puntuacion(Puntuacion_Aux aux);
 	void registrarPuntuacion(Puntuacion p);
 	void Guardar();
-	
-	int cantPuntajes() { return _puntuaciones.size(); }
-	Puntuacion verPuntaje(int i) { return _puntuaciones[i]; }
+	inline Puntuacion verPuntaje(int i) { return _puntuaciones[i]; }
 };
 
 #endif

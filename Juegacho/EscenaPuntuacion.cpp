@@ -17,11 +17,9 @@ EscenaPuntuacion::EscenaPuntuacion(Game* game, sf::RenderWindow* wnd) : Escena(g
 	_tituloPuntuaciones.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/8.0f);
 	
 	// Esto no esta levantando bien los datos del archivo por algun motivo...
-	for(int i=0;i<_game->manPun.cantPuntajes();i++) 
-	{
-		_puntuaciones[i] = _game->manPun.verPuntaje(i);
-		std::cout << _puntuaciones[i]._nombre << " " << _puntuaciones[i]._puntos << std::endl;
-	}
+	ManejoPuntuacion manPun;
+	for(int i=0;i<_puntuaciones.size();i++) 
+		_puntuaciones[i] = manPun.verPuntaje(i);
 	
 	std::stringstream ss;
 	for(int i=0;i<int(_puntuaciones.size());i++)

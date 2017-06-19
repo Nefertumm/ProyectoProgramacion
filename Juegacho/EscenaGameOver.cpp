@@ -61,8 +61,8 @@ void EscenaGameOver::ProcesarEventos()
 			else 
 				_puntJugador._nombre = string_ingresado;
 			
-			std::cout << _puntJugador._nombre << " EscenaGO " << _puntJugador._puntos << endl;
-			_game->manPun.registrarPuntuacion(_puntJugador);
+			ManejoPuntuacion manPun;
+			manPun.registrarPuntuacion(_puntJugador);
 			
 			_game->CambiarEscena(new Menu(_game, _wnd));
 		} else _nombre.processEvent(e);
