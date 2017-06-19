@@ -14,6 +14,8 @@ class Game
 		void run();
 		~Game();
 		
+		ManejoPuntuacion manPun;
+		
 		void CambiarEscena(Escena* nuevaEscena);
 	
 	protected:		
