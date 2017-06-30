@@ -16,7 +16,6 @@ protected:
 	sf::Text _volverMenu;
 	sf::Text _textPuntuaciones;
 	sf::Text _tituloPuntuaciones;
-	std::vector<Puntuacion> _puntuaciones;
 	
 public:
 	EscenaPuntuacion(Game* game, sf::RenderWindow* wnd);

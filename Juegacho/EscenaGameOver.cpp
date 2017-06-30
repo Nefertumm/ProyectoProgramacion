@@ -57,7 +57,7 @@ void EscenaGameOver::ProcesarEventos()
 		else if (e.type==sf::Event::KeyPressed && e.key.code==sf::Keyboard::Return) { 
 			string string_ingresado = _nombre.getValue(); 
 			if (string_ingresado.length() < 1)
-				string_ingresado = "Player";
+				_puntJugador._nombre = "Player";
 			else 
 				_puntJugador._nombre = string_ingresado;
 			

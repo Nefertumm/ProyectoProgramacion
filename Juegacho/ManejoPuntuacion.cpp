@@ -10,7 +10,7 @@ ManejoPuntuacion::ManejoPuntuacion()
 	if (!archiLeer.is_open()) 
 		return;
 	cout << "Leyo el archivo" << endl;
-	_puntuaciones.resize(archiLeer.tellg()/sizeof(Puntuacion));
+	_puntuaciones.resize(archiLeer.tellg()/sizeof(Puntuacion_Aux));
 	archiLeer.seekg(0);
 	
 	for(int i=0;i<int(_puntuaciones.size());i++) 
