@@ -1,6 +1,7 @@
 #include "ManejoPuntuacion.hpp"
 #include <cstring>
 #include <algorithm>
+#include <iostream>
 using namespace std;
 
 ManejoPuntuacion::ManejoPuntuacion() 
@@ -8,14 +9,18 @@ ManejoPuntuacion::ManejoPuntuacion()
 	ifstream archiLeer("puntaje.dat", ios::binary|ios::ate);
 	if (!archiLeer.is_open()) 
 		return;
-//	_puntuaciones.resize(archiLeer.tellg()/sizeof(Puntuacion));
+	cout << "Leyo el archivo" << endl;
+	_puntuaciones.resize(archiLeer.tellg()/sizeof(Puntuacion));
 	archiLeer.seekg(0);
 	
 	for(int i=0;i<int(_puntuaciones.size());i++) 
 	{ 
 		Puntuacion_Aux aux;
 		archiLeer.read(reinterpret_cast<char*>(&aux), sizeof(Puntuacion_Aux));
+		cout << "Entro al for" << endl;
+		cout << aux._nombre << " AbriendoAux " << aux._puntos << endl;
 		_puntuaciones[i] = pasar_a_puntuacion(aux);
+		cout << _puntuaciones[i]._nombre << " Abriendo " << _puntuaciones[i]._puntos << endl;
 	}
 	archiLeer.close();
 }
@@ -43,6 +48,8 @@ void ManejoPuntuacion::registrarPuntuacion(Puntuacion p)
 	reverse(_puntuaciones.begin(), _puntuaciones.end());
 	if (int(_puntuaciones.size()) > 5)
 		_puntuaciones.resize(5);
+	for(int i=0;i<int(_puntuaciones.size());i++) 
+		cout << _puntuaciones[i]._nombre << " Guardando " << _puntuaciones[i]._puntos << endl;
 	Guardar();
 }
 
