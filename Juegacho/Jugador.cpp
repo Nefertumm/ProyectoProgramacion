@@ -55,7 +55,7 @@ void Jugador::Actualizar(float dt)
 			_velocidad.y = 0;
 		}
 	}
-	cout<<_velocidad.x<<" "<<_sprite.getPosition().x<<endl;
+	//cout<<_velocidad.x<<" "<<_sprite.getPosition().x<<endl;
 	
 	_sprite.move(_velocidad * dt);
 	

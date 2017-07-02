@@ -9,6 +9,7 @@
 #include "Game.hpp"
 #include "Escena.hpp"
 #include "Jugador.hpp"
+#include "Plataforma.hpp"
 
 
 class ZonaBoss : public Escena 
@@ -19,6 +20,8 @@ protected:
 	sf::Font _fuentePuntaje;
 	Jugador _jugador;
 	float score;
+	std::vector<Plataforma> m_plataformas;
+	Plataforma p;
 	
 public:
 	ZonaBoss(Game* game, sf::RenderWindow* wnd);
@@ -32,6 +35,7 @@ public:
 	void ProcesarEventos();
 	
 	void GameOver(int score);
+	void nuevasPlataformas();
 };
 
 #endif

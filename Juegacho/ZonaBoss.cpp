@@ -2,6 +2,8 @@
 #include "EscenaGameOver.hpp"
 #include <iostream>
 #include <sstream>
+#include <ctime>
+#include <cstdlib>
 
 ZonaBoss::ZonaBoss(Game* game, sf::RenderWindow* wnd) : Escena(game, wnd)
 {
@@ -18,6 +20,7 @@ ZonaBoss::ZonaBoss(Game* game, sf::RenderWindow* wnd) : Escena(game, wnd)
 	_textPuntaje.setFont(_fuentePuntaje);
 	_textPuntaje.setColor(Color::Black);
 	
+	nuevasPlataformas();
 }
 
 ZonaBoss::~ZonaBoss() { }
@@ -61,6 +64,12 @@ void ZonaBoss::Dibujar()
 	_wnd->clear(sf::Color::White);
 	_wnd->draw(_textPuntaje);
 	_jugador.Dibujar(_wnd);
+	for(Plataforma plat : m_plataformas)
+	{
+		Plataforma p;
+		p = plat;
+		p.Dibujar(_wnd);
+	}
 	_wnd->display();
 }
 
@@ -103,4 +112,15 @@ void ZonaBoss::Actualizar(float dt)
 	
 	if (sf::Keyboard::isKeyPressed(Keyboard::L))
 		GameOver(score);
+}
+
+void ZonaBoss::nuevasPlataformas()
+{
+	for(int i=0;i<4;i++) 
+	{
+		Plataforma plat;
+		std::srand(std::time(0));
+		plat.setPosition(sf::Vector2f(rand()%800, rand()%600));
+		m_plataformas.push_back(plat);
+	}
 }
