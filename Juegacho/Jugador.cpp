@@ -18,13 +18,16 @@ Jugador::Jugador() : _velGravedad(1800.f), _isJumping(false), _dSalto(150.0f), _
 	_sprite.setScale({0.4, 0.4});
 }
 
-Jugador::~Jugador() {
-	
-}
+Jugador::~Jugador() { }
 
 void Jugador::Dibujar(sf::RenderWindow* wnd)
 {
 	wnd->draw(_sprite);
+}
+
+void Jugador::setVelocity(sf::Vector2f vel)
+{
+	_velocidad = vel;
 }
 
 void Jugador::Actualizar(float dt)
@@ -55,12 +58,10 @@ void Jugador::Actualizar(float dt)
 			_velocidad.y = 0;
 		}
 	}
-	//cout<<_velocidad.x<<" "<<_sprite.getPosition().x<<endl;
 	
 	_sprite.move(_velocidad * dt);
 	
 	mantenerJugadorEnPantalla();
-	
 }
 
 sf::FloatRect Jugador::Bounds()

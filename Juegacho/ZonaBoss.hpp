@@ -11,6 +11,7 @@
 #include "Jugador.hpp"
 #include "Plataforma.hpp"
 
+#define cant_plat 6
 
 class ZonaBoss : public Escena 
 {
@@ -20,8 +21,7 @@ protected:
 	sf::Font _fuentePuntaje;
 	Jugador _jugador;
 	float score;
-	std::vector<Plataforma> m_plataformas;
-	Plataforma p;
+	Plataforma m_plat[cant_plat];
 	
 public:
 	ZonaBoss(Game* game, sf::RenderWindow* wnd);
@@ -29,10 +29,10 @@ public:
 	
 	void Reiniciar();
 	
-	void Dibujar();
-	void Actualizar(float dt);
-	void ProcesarColisiones();
-	void ProcesarEventos();
+	void Dibujar() override;
+	void Actualizar(float dt) override;
+	void ProcesarColisiones() override;
+	void ProcesarEventos() override;
 	
 	void GameOver(int score);
 	void nuevasPlataformas();

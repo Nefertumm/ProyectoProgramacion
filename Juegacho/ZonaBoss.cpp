@@ -4,6 +4,9 @@
 #include <sstream>
 #include <ctime>
 #include <cstdlib>
+#include <vector>
+#include <algorithm>
+
 
 ZonaBoss::ZonaBoss(Game* game, sf::RenderWindow* wnd) : Escena(game, wnd)
 {
@@ -19,8 +22,11 @@ ZonaBoss::ZonaBoss(Game* game, sf::RenderWindow* wnd) : Escena(game, wnd)
 	
 	_textPuntaje.setFont(_fuentePuntaje);
 	_textPuntaje.setColor(Color::Black);
+	srand(time(nullptr));
 	
 	nuevasPlataformas();
+	for(int i=0;i<cant_plat;i++) 
+		std::cout << i << " " << m_plat[i].getPosition().y << std::endl;
 }
 
 ZonaBoss::~ZonaBoss() { }
@@ -64,18 +70,9 @@ void ZonaBoss::Dibujar()
 	_wnd->clear(sf::Color::White);
 	_wnd->draw(_textPuntaje);
 	_jugador.Dibujar(_wnd);
-	for(Plataforma plat : m_plataformas)
-	{
-		Plataforma p;
-		p = plat;
-		p.Dibujar(_wnd);
-	}
+	for(int i=0;i<cant_plat;i++) 
+		m_plat[i].Dibujar(_wnd);
 	_wnd->display();
-}
-
-void ZonaBoss::ProcesarColisiones()
-{
-	
 }
 
 void ZonaBoss::ProcesarEventos()
@@ -91,6 +88,16 @@ void ZonaBoss::ProcesarEventos()
 			default:
 				break;
 		}
+	}
+}
+
+void ZonaBoss::ProcesarColisiones() 
+{
+	sf::Vector2f vec(0, 0);
+	for(int i=0;i<cant_plat;i++) 
+	{
+		if(sat_test(_jugador.getSprite(), m_plat[i].getSprite(), &vec))
+			_jugador.setVelocity(vec);
 	}
 }
 
@@ -116,11 +123,40 @@ void ZonaBoss::Actualizar(float dt)
 
 void ZonaBoss::nuevasPlataformas()
 {
-	for(int i=0;i<4;i++) 
+	std::vector<Plataforma> v_plat;
+	for(int i=0;i<cant_plat;i++)
 	{
-		Plataforma plat;
-		std::srand(std::time(0));
-		plat.setPosition(sf::Vector2f(rand()%800, rand()%600));
-		m_plataformas.push_back(plat);
+		if (i<=2)
+			m_plat[i].setPosition(sf::Vector2f(rand()%300+100*i, rand()%200+400-130*0.4));
+		else if (i > 2 && i <= 4)
+			m_plat[i].setPosition(sf::Vector2f(rand()%300+50*i, rand()%200+200-130*0.4));
+		else 
+			m_plat[i].setPosition(sf::Vector2f(rand()%300+10*i, rand()%200-130*0.4));
+		
+		v_plat.push_back(m_plat[i]);
+	}
+	
+	sort(v_plat.begin(), v_plat.end());
+	reverse(v_plat.begin(), v_plat.end());
+	for(int i=0;i<v_plat.size();i++) 
+		m_plat[i] = v_plat[i];
+	
+	for(int i=0;i<cant_plat;i++) 
+	{ 
+		if (i+1 <= cant_plat)
+		{
+			sf::Vector2f pos1 = m_plat[i].getPosition(), pos2 = m_plat[i+1].getPosition(), deltaPos;
+			deltaPos.y = pos1.y - pos2.y;
+			if ((deltaPos.y > 0) && (deltaPos.y+128*0.1) < 131*0.4)
+			{
+				pos2.y -= 130*0.4;
+				m_plat[i+1].setPosition(pos2);
+			} 
+			else if ((deltaPos.y < 0) && deltaPos.y > -131*0.4)
+			{
+				pos1.y -= 130*0.4;
+				m_plat[i].setPosition(pos1);
+			}
+		}
 	}
 }

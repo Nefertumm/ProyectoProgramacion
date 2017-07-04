@@ -22,10 +22,10 @@ public:
 	~Menu();
 	
 	
-	void Dibujar();
-	void Actualizar(float dt);
-	void ProcesarColisiones();
-	void ProcesarEventos();
+	void Dibujar() override;
+	void Actualizar(float dt) override;
+	void ProcesarColisiones() override;
+	void ProcesarEventos() override;
 };
 
 #endif
