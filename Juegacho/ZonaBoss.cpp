@@ -96,8 +96,19 @@ void ZonaBoss::ProcesarColisiones()
 	sf::Vector2f vec(0, 0);
 	for(int i=0;i<cant_plat;i++) 
 	{
-		if(sat_test(_jugador.getSprite(), m_plat[i].getSprite(), &vec))
-			_jugador.setVelocity(vec);
+		if(sat_test(_jugador.getSprite(), m_plat[i].getSprite(), &vec)){
+			_jugador.modificarPos(vec);
+			if(vec.x != 0){
+				vec.x=0;
+				vec.y=_jugador.getVelocidad().y;
+				_jugador.setVelocity(vec);
+			}
+					if(vec.y !=0){
+			   vec.x=_jugador.getVelocidad().x;
+			   vec.y=0;
+				_jugador.setVelocity(vec);
+			}
+		}
 	}
 }
 

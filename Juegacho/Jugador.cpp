@@ -69,6 +69,11 @@ sf::FloatRect Jugador::Bounds()
 	return _sprite.getGlobalBounds();
 }
 
+void Jugador::modificarPos(sf::Vector2f v)
+{
+	_sprite.move(v);
+}
+
 void Jugador::mantenerJugadorEnPantalla() 
 {
 	if (_sprite.getPosition().x <= 0.f)

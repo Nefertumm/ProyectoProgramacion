@@ -26,6 +26,7 @@ public:
 	sf::FloatRect Bounds();
 	void mantenerJugadorEnPantalla();
 	void setVelocity(sf::Vector2f vel);
+	void modificarPos(sf::Vector2f v);
 	
 	inline sf::Vector2f getVelocidad() { return _velocidad; } // Nos va a servir para más tarde..
 	inline bool isJumping() { return _isJumping; }
