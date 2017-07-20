@@ -27,10 +27,11 @@ public:
 	void mantenerJugadorEnPantalla();
 	void setVelocity(sf::Vector2f vel);
 	void modificarPos(sf::Vector2f v);
+	void setJumping(bool jump);
 	
-	inline sf::Vector2f getVelocidad() { return _velocidad; } // Nos va a servir para más tarde..
-	inline bool isJumping() { return _isJumping; }
-	inline sf::Sprite getSprite() { return _sprite; }
+	sf::Vector2f getVelocidad() { return _velocidad; } // Nos va a servir para más tarde..
+	bool isJumping() { return _isJumping; }
+	sf::Sprite getSprite() { return _sprite; }
 };
 
 #endif

@@ -27,6 +27,8 @@ ZonaBoss::ZonaBoss(Game* game, sf::RenderWindow* wnd) : Escena(game, wnd)
 	nuevasPlataformas();
 	for(int i=0;i<cant_plat;i++) 
 		std::cout << i << " " << m_plat[i].getPosition().y << std::endl;
+	
+	
 }
 
 ZonaBoss::~ZonaBoss() { }
@@ -70,6 +72,7 @@ void ZonaBoss::Dibujar()
 	_wnd->clear(sf::Color::White);
 	_wnd->draw(_textPuntaje);
 	_jugador.Dibujar(_wnd);
+	proy.Dibujar(_wnd);
 	for(int i=0;i<cant_plat;i++) 
 		m_plat[i].Dibujar(_wnd);
 	_wnd->display();
@@ -98,16 +101,10 @@ void ZonaBoss::ProcesarColisiones()
 	{
 		if(sat_test(_jugador.getSprite(), m_plat[i].getSprite(), &vec)){
 			_jugador.modificarPos(vec);
-			if(vec.x != 0){
-				vec.x=0;
-				vec.y=_jugador.getVelocidad().y;
-				_jugador.setVelocity(vec);
-			}
-					if(vec.y !=0){
-			   vec.x=_jugador.getVelocidad().x;
-			   vec.y=0;
-				_jugador.setVelocity(vec);
-			}
+			if(vec.x != 0)
+				_jugador.setVelocity({0, _jugador.getVelocidad().y});
+			if(vec.y !=0)
+				_jugador.setVelocity({_jugador.getVelocidad().x, 0});
 		}
 	}
 }
@@ -125,6 +122,7 @@ void ZonaBoss::Actualizar(float dt)
 	std::stringstream sc;
 	sc << "Score: " << int(score);
 	_textPuntaje.setString(sc.str());
+	proy.Actualizar(dt);
 	
 	_jugador.Actualizar(dt);
 	

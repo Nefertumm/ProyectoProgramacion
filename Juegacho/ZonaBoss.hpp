@@ -10,6 +10,8 @@
 #include "Escena.hpp"
 #include "Jugador.hpp"
 #include "Plataforma.hpp"
+#include "Boss.hpp"
+#include "Proyectil.hpp"
 
 #define cant_plat 6
 
@@ -22,6 +24,7 @@ protected:
 	Jugador _jugador;
 	float score;
 	Plataforma m_plat[cant_plat];
+	Proyectil proy;
 	
 public:
 	ZonaBoss(Game* game, sf::RenderWindow* wnd);

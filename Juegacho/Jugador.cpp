@@ -81,3 +81,8 @@ void Jugador::mantenerJugadorEnPantalla()
 	else if (_sprite.getPosition().x > (800 - _sprite.getTextureRect().width/2))
 		_sprite.setPosition( sf::Vector2f(800 - _sprite.getTextureRect().width/2, _sprite.getPosition().y) );
 }
+
+void Jugador::setJumping(bool jump)
+{
+	_isJumping = jump;
+}
