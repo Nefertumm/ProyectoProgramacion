@@ -24,7 +24,6 @@ protected:
 	Jugador _jugador;
 	float score;
 	Plataforma m_plat[cant_plat];
-	Proyectil proy;
 	
 public:
 	ZonaBoss(Game* game, sf::RenderWindow* wnd);

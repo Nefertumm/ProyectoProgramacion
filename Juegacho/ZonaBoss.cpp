@@ -72,7 +72,6 @@ void ZonaBoss::Dibujar()
 	_wnd->clear(sf::Color::White);
 	_wnd->draw(_textPuntaje);
 	_jugador.Dibujar(_wnd);
-	proy.Dibujar(_wnd);
 	for(int i=0;i<cant_plat;i++) 
 		m_plat[i].Dibujar(_wnd);
 	_wnd->display();
@@ -122,7 +121,6 @@ void ZonaBoss::Actualizar(float dt)
 	std::stringstream sc;
 	sc << "Score: " << int(score);
 	_textPuntaje.setString(sc.str());
-	proy.Actualizar(dt);
 	
 	_jugador.Actualizar(dt);
 	
@@ -156,14 +154,14 @@ void ZonaBoss::nuevasPlataformas()
 		{
 			sf::Vector2f pos1 = m_plat[i].getPosition(), pos2 = m_plat[i+1].getPosition(), deltaPos;
 			deltaPos.y = pos1.y - pos2.y;
-			if ((deltaPos.y > 0) && (deltaPos.y+128*0.1) < 131*0.4)
+			if ((deltaPos.y > 0) && (deltaPos.y+128*0.1) < 49)
 			{
-				pos2.y -= 130*0.4;
+				pos2.y -= 49;
 				m_plat[i+1].setPosition(pos2);
 			} 
-			else if ((deltaPos.y < 0) && deltaPos.y > -131*0.4)
+			else if ((deltaPos.y < 0) && deltaPos.y > -49)
 			{
-				pos1.y -= 130*0.4;
+				pos1.y -= 49;
 				m_plat[i].setPosition(pos1);
 			}
 		}

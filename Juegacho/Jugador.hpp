@@ -1,7 +1,7 @@
 #ifndef JUGADOR_HPP
 #define JUGADOR_HPP
 #include <SFML/Graphics.hpp>
-
+#include "Animaciones.hpp"
 
 class Jugador 
 {
@@ -16,6 +16,12 @@ protected:
 	float _dSalto;
 	float _movementSpeed;
 	sf::Vector2f _velocidad;
+	
+	// Animaciones
+	Animaciones* anim;
+	bool mIzquierda;
+	unsigned int fila;
+	
 	
 public:
 	Jugador();

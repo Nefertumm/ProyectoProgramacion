@@ -12,7 +12,10 @@ Proyectil::Proyectil()
 	_sprite.setPosition(150.f, 300.f);
 }
 
-Proyectil::~Proyectil() { }
+Proyectil::~Proyectil() 
+{
+	delete anim;
+}
 
 void Proyectil::Actualizar(float dt)
 {

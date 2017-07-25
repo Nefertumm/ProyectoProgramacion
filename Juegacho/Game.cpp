@@ -8,7 +8,7 @@ using namespace std;
 Game::Game()
 {
 	wnd = new RenderWindow(sf::VideoMode(800,600), "Injusticia hecha juego"/*, sf::Style::Titlebar|sf::Style::Close*/);
-	//wnd->setFramerateLimit(60);
+	wnd->setFramerateLimit(60);
 	
 	_escenaAnterior = nullptr;
 	_escenaActual = new Menu(this, wnd);
@@ -27,12 +27,15 @@ Game::Game()
 
 void Game::run()
 {
-	_clock.restart();
-	
+	float deltaTime = 0.0f;
 	while (wnd->isOpen())
 	{
+		deltaTime = _clock.restart().asSeconds();
+		if (deltaTime > 1.0f / 20.0f)
+			deltaTime = 1.0f / 20.0f;
+		
 		_escenaActual->ProcesarEventos();
-		_escenaActual->Actualizar(_clock.restart().asSeconds());
+		_escenaActual->Actualizar(deltaTime);
 		_escenaActual->ProcesarColisiones();
 		_escenaActual->Dibujar();
 		delete _escenaAnterior; _escenaAnterior = nullptr;

@@ -14,7 +14,7 @@ Animaciones::Animaciones(sf::Texture* textura, sf::Vector2u cantImg, float switc
 
 Animaciones::~Animaciones() { }
 
-void Animaciones::Actualizar(int fila, float dt)
+void Animaciones::Actualizar(int fila, float dt, bool mIzquierda)
 {
 	imgActual.y = fila;
 	totalTime += dt;
@@ -24,10 +24,20 @@ void Animaciones::Actualizar(int fila, float dt)
 		totalTime -= switchTime;
 		imgActual.x++;
 		
-		if (imgActual.x >= cantImg.x)
+		if (imgActual.x >= cantImg.x || imgActual.x < 0)
 			imgActual.x = 0;
 		
-		uvRect.left = imgActual.x * uvRect.width;
 		uvRect.top = imgActual.y * uvRect.height;
+		
+		if (mIzquierda)
+		{
+			uvRect.left = imgActual.x * abs(uvRect.width);
+			uvRect.width = abs(uvRect.width);
+		}
+		else
+		{
+			uvRect.left = (imgActual.x + 1) * abs(uvRect.width);
+			uvRect.width = -abs(uvRect.width);
+		}
 	}
 }
