@@ -3,19 +3,18 @@
 #include <SFML/Graphics.hpp>
 #include "Animaciones.hpp"
 
-class Jugador 
+class Jugador
 {
 protected:
-	sf::Texture _texture;
-	sf::Sprite _sprite;
-	const float _suelo = 550.f;
+	sf::Texture texture;
+	sf::Sprite sprite;
 	
 	//Variables de gravedad:
-	float _velGravedad;
-	bool _isJumping;
-	float _dSalto;
-	float _movementSpeed;
-	sf::Vector2f _velocidad;
+	const float velGravedad = 1800.f;
+	bool isJumping;
+	const float dSalto = 150.f;
+	const float movementSpeed = 300.f;
+	sf::Vector2f velocidad;
 	
 	// Animaciones
 	Animaciones* anim;
@@ -29,15 +28,14 @@ public:
 	
 	void Dibujar(sf::RenderWindow* wnd);
 	void Actualizar(float dt);
-	sf::FloatRect Bounds();
 	void mantenerJugadorEnPantalla();
-	void setVelocity(sf::Vector2f vel);
-	void modificarPos(sf::Vector2f v);
-	void setJumping(bool jump);
+	void setVelocity(sf::Vector2f vel) { velocidad = vel; }
+	void move(sf::Vector2f v) { sprite.move(v); }
+	void setJumping(bool jump) { isJumping = jump; }
 	
-	sf::Vector2f getVelocidad() { return _velocidad; } // Nos va a servir para más tarde..
-	bool isJumping() { return _isJumping; }
-	sf::Sprite getSprite() { return _sprite; }
+	sf::Vector2f getVelocidad() { return velocidad; }
+	bool estaSaltando() { return isJumping; }
+	sf::Sprite getSprite() { return sprite; }
 };
 
 #endif

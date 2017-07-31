@@ -10,19 +10,25 @@
 
 ZonaBoss::ZonaBoss(Game* game, sf::RenderWindow* wnd) : Escena(game, wnd)
 {
-	if (!_ambiente.openFromFile("resources/boss.ogg"))
-		std::cerr << "No se pudo cargar la musica del boss." << std::endl;
+//	if (!_ambiente.openFromFile("resources/boss.ogg"))
+//		std::cerr << "No se pudo cargar la musica del boss." << std::endl;
 	if (!_fuentePuntaje.loadFromFile("resources/arial.ttf"))
 		std::cerr << "No se pudo cargar el archivo fuente" << std::endl;
+	if (!textSuelo.loadFromFile("resources/platform.png"))
+		std::cerr << "No se pudo cargar el sprite del suelo" << std::endl;
 	score = 0;
-	
-	_ambiente.setVolume(0); // cambiar a 100 cuando ya este hecho.
-	_ambiente.setLoop(true);
-	_ambiente.play();
+
+//	_ambiente.setVolume(0); // cambiar a 100 cuando ya este hecho.
+//	_ambiente.setLoop(true);
+//	_ambiente.play();
 	
 	_textPuntaje.setFont(_fuentePuntaje);
 	_textPuntaje.setColor(Color::Black);
 	srand(time(nullptr));
+	
+	suelo.setTexture(textSuelo);
+	suelo.setScale(6.25f, 0.1f);
+	suelo.setPosition(0.0f, 587.f);
 	
 	nuevasPlataformas();
 	for(int i=0;i<cant_plat;i++) 
@@ -71,9 +77,12 @@ void ZonaBoss::Dibujar()
 {
 	_wnd->clear(sf::Color::White);
 	_wnd->draw(_textPuntaje);
+	_wnd->draw(suelo);
 	_jugador.Dibujar(_wnd);
 	for(int i=0;i<cant_plat;i++) 
 		m_plat[i].Dibujar(_wnd);
+	for (auto &itr_npc : npcs)
+		itr_npc->Dibujar(_wnd);
 	_wnd->display();
 }
 
@@ -95,20 +104,50 @@ void ZonaBoss::ProcesarEventos()
 
 void ZonaBoss::ProcesarColisiones() 
 {
-	sf::Vector2f vec(0, 0);
+	sf::Vector2f vec(0.f, 0.f);
 	for(int i=0;i<cant_plat;i++) 
 	{
 		if(sat_test(_jugador.getSprite(), m_plat[i].getSprite(), &vec)){
-			_jugador.modificarPos(vec);
+			_jugador.move(vec);
 			if(vec.x != 0)
 				_jugador.setVelocity({0, _jugador.getVelocidad().y});
 			if(vec.y !=0)
+			{
 				_jugador.setVelocity({_jugador.getVelocidad().x, 0});
+				if (vec.y <= 0)
+				{
+					_jugador.setJumping(false);
+					std::cout << "Se toca en y" << vec.y << std::endl;
+				}
+			}
 		}
 	}
+	
+	if (sat_test(_jugador.getSprite(), suelo, &vec))
+	{
+		_jugador.move(vec);
+		if(vec.y !=0)
+		{
+			_jugador.setVelocity({_jugador.getVelocidad().x, 0});
+			_jugador.setJumping(false);
+		}
+	}
+	
+	for (auto itr_npc : npcs)
+		if (sat_test(itr_npc->getSprite(), suelo, &vec))
+		{
+			itr_npc->move(vec);
+			if(vec.y !=0)
+			{
+				itr_npc->setVelocity({itr_npc->getVelocidad().x, 0});
+				itr_npc->setJumping(false);
+			}
+		}
+	
+//	if (sat_test(_jugador.getSprite(), npc.getSprite()))
+//		GameOver(score);
 }
 
-void ZonaBoss::Reiniciar() { }
 
 void ZonaBoss::GameOver(int score)
 {
@@ -123,6 +162,9 @@ void ZonaBoss::Actualizar(float dt)
 	_textPuntaje.setString(sc.str());
 	
 	_jugador.Actualizar(dt);
+	
+	for(auto itr_npc : npcs)
+		itr_npc->Actualizar(dt);
 	
 	if (sf::Keyboard::isKeyPressed(Keyboard::L))
 		GameOver(score);
