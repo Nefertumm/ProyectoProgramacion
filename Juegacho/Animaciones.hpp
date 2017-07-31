@@ -8,7 +8,7 @@ public:
 	sf::IntRect uvRect;
 	Animaciones(sf::Texture* textura, sf::Vector2u cantImg, float switchTime);
 	~Animaciones();
-	void Actualizar(int fila, float dt, bool mDerecha = true);
+	void Actualizar(int fila, float dt, bool mIzquierda = true);
 	
 protected:
 	sf::Vector2u cantImg;
@@ -16,8 +16,6 @@ protected:
 	
 	float totalTime;
 	float switchTime;
-	
-	bool mDerecha;
 };
 
 #endif
