@@ -3,11 +3,11 @@
 
 Plataforma::Plataforma() 
 {
-	if (!m_texture.loadFromFile("resources/platform.png"))
+	if (!m_texture.loadFromFile("resources/Blocks.png"))
 		std::cerr << "No se pudo cargar el sprite de la plataforma." << std::endl;
 	
 	m_sprite.setTexture(m_texture);
-	m_sprite.setScale(0.9, 0.1);
+	m_sprite.setScale(1, 0.9);
 }
 
 Plataforma::~Plataforma() { }

@@ -166,7 +166,7 @@ void ZonaBoss::Actualizar(float dt)
 	for(auto itr_npc : npcs)
 		itr_npc->Actualizar(dt);
 	
-	if (sf::Keyboard::isKeyPressed(Keyboard::L))
+	if (sf::Keyboard::isKeyPressed(Keyboard::Numpad5))
 		GameOver(score);
 }
 
@@ -175,12 +175,40 @@ void ZonaBoss::nuevasPlataformas()
 	std::vector<Plataforma> v_plat;
 	for(int i=0;i<cant_plat;i++)
 	{
-		if (i<=2)
-			m_plat[i].setPosition(sf::Vector2f(rand()%300+100*i, rand()%200+400-130*0.4));
-		else if (i > 2 && i <= 4)
-			m_plat[i].setPosition(sf::Vector2f(rand()%300+50*i, rand()%200+200-130*0.4));
-		else 
-			m_plat[i].setPosition(sf::Vector2f(rand()%300+10*i, rand()%200-130*0.4));
+		sf::Vector2f vec(0.f, 0.f);
+		switch (i)
+		{ 
+			case 0:
+				vec = { 100+rand()%(150+1), 100+rand()%(150+1) };
+				m_plat[i].setPosition(vec);
+				break;
+			case 1:
+				vec = { 300+rand()%(450+1), 100+rand()%(150+1) };
+				if (vec.x >= 600)
+					vec.x = 400;
+				m_plat[i].setPosition(vec);
+				break;
+//			case 2:
+//				vec = { 300+rand()%(450+1), 100+rand()%(150+1) };
+//				m_plat[i].setPosition(vec);
+//				break;
+//			case 3:
+//				vec = { 300+rand()%(450+1), 100+rand()%(150+1) };
+//				if (vec.x >= 600)
+//					vec.x = 400;
+//				m_plat[i].setPosition(vec);
+//				break;
+//			case 4:
+//				vec = { 300+rand()%(450+1), 100+rand()%(150+1) };
+//				m_plat[i].setPosition(vec);
+//				break;
+//			case 5:
+//				vec = { 300+rand()%(450+1), 100+rand()%(150+1) };
+//				if (vec.x >= 600)
+//					vec.x = 400;
+//				m_plat[i].setPosition(vec);
+//				break;
+		}
 		
 		v_plat.push_back(m_plat[i]);
 	}
@@ -190,22 +218,35 @@ void ZonaBoss::nuevasPlataformas()
 	for(int i=0;i<v_plat.size();i++) 
 		m_plat[i] = v_plat[i];
 	
-	for(int i=0;i<cant_plat;i++) 
-	{ 
-		if (i+1 <= cant_plat)
-		{
-			sf::Vector2f pos1 = m_plat[i].getPosition(), pos2 = m_plat[i+1].getPosition(), deltaPos;
-			deltaPos.y = pos1.y - pos2.y;
-			if ((deltaPos.y > 0) && (deltaPos.y+128*0.1) < 49)
-			{
-				pos2.y -= 49;
-				m_plat[i+1].setPosition(pos2);
-			} 
-			else if ((deltaPos.y < 0) && deltaPos.y > -49)
-			{
-				pos1.y -= 49;
-				m_plat[i].setPosition(pos1);
-			}
-		}
-	}
+//	for(int i=0;i<cant_plat;i++) 
+//	{ 
+//		sort(v_plat.begin(), v_plat.end());
+//		reverse(v_plat.begin(), v_plat.end());
+//		for(int k=0;k<v_plat.size();k++)
+//			m_plat[k] = v_plat[k];
+//		
+//		if (i+1 <= cant_plat)
+//		{
+//			sf::Vector2f pos1 = m_plat[i].getPosition(), pos2 = m_plat[i+1].getPosition(), deltaPos;
+//			deltaPos.y = pos1.y - pos2.y;
+////			if(pos1.x > 600)
+////			{
+////				pos1.x = 400;
+////				m_plat[i].setPosition(pos1);
+////			}
+////			std::cout << "posicion en x  de plataforma: " << pos1.x << std::endl; 
+//			if ((deltaPos.y > 0) && (deltaPos.y+22) < 49)
+//			{
+//				pos2.y -= 49;
+//				m_plat[i+1].setPosition(pos2);
+//			std::cout << "posicion en y  de plataforma: " << pos1.y << std::endl; 
+//			} 
+//			else if ((deltaPos.y < 0) && deltaPos.y > -49)
+//			{
+//				pos1.y -= 49;
+//				m_plat[i].setPosition(pos1);
+//			std::cout << "posicion en y  de plataforma: " << pos1.y << std::endl; 
+//			}
+//		}
+//	}
 }
