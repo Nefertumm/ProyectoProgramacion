@@ -9,12 +9,15 @@ protected:
 	sf::Texture texture;
 	sf::Sprite sprite;
 	
-	//Variables de gravedad:
+	// Constantes:
 	const float velGravedad = 1800.f;
-	bool isJumping;
 	const float dSalto = 150.f;
 	const float movementSpeed = 300.f;
+	
+	bool isJumping;
 	sf::Vector2f velocidad;
+	bool canDoubleJump;
+	bool keyReleased;
 	
 	// Animaciones
 	Animaciones* anim;
@@ -31,11 +34,12 @@ public:
 	void mantenerJugadorEnPantalla();
 	void setVelocity(sf::Vector2f vel) { velocidad = vel; }
 	void move(sf::Vector2f v) { sprite.move(v); }
-	void setJumping(bool jump) { isJumping = jump; }
+	void setJumping(bool jump) { isJumping = jump; canDoubleJump = true;}
 	
 	sf::Vector2f getVelocidad() { return velocidad; }
 	bool estaSaltando() { return isJumping; }
 	sf::Sprite getSprite() { return sprite; }
+	void keyRel(bool keyReleased) { this->keyReleased = keyReleased; }
 };
 
 #endif

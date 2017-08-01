@@ -96,6 +96,10 @@ void ZonaBoss::ProcesarEventos()
 			case sf::Event::Closed:
 				_wnd->close();
 				break;
+			case sf::Event::KeyReleased:
+				if (e.key.code == sf::Keyboard::Up)
+					_jugador.keyRel(true);
+				break;
 			default:
 				break;
 		}
@@ -115,10 +119,7 @@ void ZonaBoss::ProcesarColisiones()
 			{
 				_jugador.setVelocity({_jugador.getVelocidad().x, 0});
 				if (vec.y <= 0)
-				{
 					_jugador.setJumping(false);
-					std::cout << "Se toca en y" << vec.y << std::endl;
-				}
 			}
 		}
 	}
@@ -134,6 +135,7 @@ void ZonaBoss::ProcesarColisiones()
 	}
 	
 	for (auto itr_npc : npcs)
+	{
 		if (sat_test(itr_npc->getSprite(), suelo, &vec))
 		{
 			itr_npc->move(vec);
@@ -143,7 +145,18 @@ void ZonaBoss::ProcesarColisiones()
 				itr_npc->setJumping(false);
 			}
 		}
-	
+		
+		if (sat_test(itr_npc->getSprite(), suelo, &vec))
+		{
+			itr_npc->move(vec);
+			if (vec.y != 0)
+			{
+				itr_npc->setVelocity(sf::Vector2f(itr_npc->getVelocidad().x, 0));
+				if (vec.y <= 0)
+					itr_npc->setJumping(false);
+			}
+		}
+	}
 //	if (sat_test(_jugador.getSprite(), npc.getSprite()))
 //		GameOver(score);
 }
@@ -179,74 +192,55 @@ void ZonaBoss::nuevasPlataformas()
 		switch (i)
 		{ 
 			case 0:
-				vec = { 100+rand()%(150+1), 100+rand()%(150+1) };
+				vec = { float(80+rand()%(130+1)), float(100+rand()%(150+1)) };
+				m_plat[i].setPosition(vec);
+				if (vec.y >= 200)
+					vec.y = 150.f;
 				m_plat[i].setPosition(vec);
 				break;
 			case 1:
-				vec = { 300+rand()%(450+1), 100+rand()%(150+1) };
-				if (vec.x >= 600)
-					vec.x = 400;
+				vec = { float(300+rand()%(450+1)), float(100+rand()%(150+1)) };
+				if (vec.x >= 500)
+					vec.x = 400.f;
+				if (vec.y >= 200)
+					vec.y =150.f;
 				m_plat[i].setPosition(vec);
 				break;
-//			case 2:
-//				vec = { 300+rand()%(450+1), 100+rand()%(150+1) };
-//				m_plat[i].setPosition(vec);
-//				break;
-//			case 3:
-//				vec = { 300+rand()%(450+1), 100+rand()%(150+1) };
-//				if (vec.x >= 600)
-//					vec.x = 400;
-//				m_plat[i].setPosition(vec);
-//				break;
-//			case 4:
-//				vec = { 300+rand()%(450+1), 100+rand()%(150+1) };
-//				m_plat[i].setPosition(vec);
-//				break;
-//			case 5:
-//				vec = { 300+rand()%(450+1), 100+rand()%(150+1) };
-//				if (vec.x >= 600)
-//					vec.x = 400;
-//				m_plat[i].setPosition(vec);
-//				break;
+			case 2:
+				vec = { float(80+rand()%(130+1)), float(150+rand()%(180+1)) };
+				if (vec.y <= 250)
+					vec.y = 350.f;
+				m_plat[i].setPosition(vec);
+				break;
+			case 3:
+				vec = { float(300+rand()%(450+1)), float(150+rand()%(180+1)) };
+				if (vec.y <= 250)
+					vec.y = 350.f;
+				if (vec.x >= 500)
+					vec.x = 400.f;
+				m_plat[i].setPosition(vec);
+				break;
+			case 4:
+				vec = { float(80+rand()%(130+1)), float(250+rand()%(280+1)) };
+				m_plat[i].setPosition(vec);
+				if (vec.y <= 400)
+					vec.y = 450.f;
+				if (vec.y >= 500)
+					vec.y = 450.f;
+				m_plat[i].setPosition(vec);
+				break;
+			case 5:
+				vec = { float(300+rand()%(450+1)), float(250+rand()%(280+1)) };
+				if (vec.x >= 500)
+					vec.x = 400.f;
+				if (vec.y <= 400)
+					vec.y = 450.f;
+				if (vec.y >= 500)
+					vec.y = 450.f;
+				m_plat[i].setPosition(vec);
+				break;
 		}
 		
 		v_plat.push_back(m_plat[i]);
-	}
-	
-	sort(v_plat.begin(), v_plat.end());
-	reverse(v_plat.begin(), v_plat.end());
-	for(int i=0;i<v_plat.size();i++) 
-		m_plat[i] = v_plat[i];
-	
-//	for(int i=0;i<cant_plat;i++) 
-//	{ 
-//		sort(v_plat.begin(), v_plat.end());
-//		reverse(v_plat.begin(), v_plat.end());
-//		for(int k=0;k<v_plat.size();k++)
-//			m_plat[k] = v_plat[k];
-//		
-//		if (i+1 <= cant_plat)
-//		{
-//			sf::Vector2f pos1 = m_plat[i].getPosition(), pos2 = m_plat[i+1].getPosition(), deltaPos;
-//			deltaPos.y = pos1.y - pos2.y;
-////			if(pos1.x > 600)
-////			{
-////				pos1.x = 400;
-////				m_plat[i].setPosition(pos1);
-////			}
-////			std::cout << "posicion en x  de plataforma: " << pos1.x << std::endl; 
-//			if ((deltaPos.y > 0) && (deltaPos.y+22) < 49)
-//			{
-//				pos2.y -= 49;
-//				m_plat[i+1].setPosition(pos2);
-//			std::cout << "posicion en y  de plataforma: " << pos1.y << std::endl; 
-//			} 
-//			else if ((deltaPos.y < 0) && deltaPos.y > -49)
-//			{
-//				pos1.y -= 49;
-//				m_plat[i].setPosition(pos1);
-//			std::cout << "posicion en y  de plataforma: " << pos1.y << std::endl; 
-//			}
-//		}
-//	}
+	}              
 }

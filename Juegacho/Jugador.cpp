@@ -3,7 +3,7 @@
 #include <cmath>
 using namespace std;
 
-Jugador::Jugador() : isJumping(false)
+Jugador::Jugador() : isJumping(false), canDoubleJump(true), keyReleased(true)
 {	
 	if (!texture.loadFromFile("resources/jugador.png"))
 		std::cerr << "No se pudo encontrar la textura" << std::endl;
@@ -50,18 +50,18 @@ void Jugador::Actualizar(float dt)
 			mIzquierda = false;
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !isJumping)
+	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && keyReleased) && (!isJumping || canDoubleJump))
 	{
+		keyReleased = false;
+		if (isJumping)
+			canDoubleJump = false;
 		isJumping = true;
 		velocidad.y = (float)-sqrtf(2.0f * velGravedad * dSalto);
 		sprite.setPosition(sprite.getPosition().x, sprite.getPosition().y-1);
 	}
 	
-
 	if(isJumping)
-	{
 		velocidad.y += dt * velGravedad;
-	}
 	
 	anim->Actualizar(fila, dt, mIzquierda);
 	sprite.setTextureRect(anim->uvRect);
@@ -76,4 +76,10 @@ void Jugador::mantenerJugadorEnPantalla()
 		sprite.setPosition( sf::Vector2f(0.f, sprite.getPosition().y) );
 	else if (sprite.getPosition().x > (740 - sprite.getTextureRect().width/2))
 		sprite.setPosition( sf::Vector2f(740 - sprite.getTextureRect().width/2, sprite.getPosition().y) );
+	
+	if (sprite.getPosition().y < 0.f)
+	{
+		velocidad.y = 0;
+		sprite.setPosition( sf::Vector2f(sprite.getPosition().x, 0.0f) );
+	}
 }
