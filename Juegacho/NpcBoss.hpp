@@ -8,7 +8,7 @@ class NpcBoss
 protected:
 	sf::Texture texture;
 	sf::Sprite sprite;
-	Animaciones *anim;
+	Animaciones* anim;
 	
 	sf::Vector2f velocidad;
 	bool isJumping;

@@ -8,37 +8,6 @@
 #include <algorithm>
 
 
-ZonaBoss::ZonaBoss(Game* game, sf::RenderWindow* wnd) : Escena(game, wnd)
-{
-//	if (!_ambiente.openFromFile("resources/boss.ogg"))
-//		std::cerr << "No se pudo cargar la musica del boss." << std::endl;
-	if (!_fuentePuntaje.loadFromFile("resources/arial.ttf"))
-		std::cerr << "No se pudo cargar el archivo fuente" << std::endl;
-	if (!textSuelo.loadFromFile("resources/platform.png"))
-		std::cerr << "No se pudo cargar el sprite del suelo" << std::endl;
-	score = 0;
-
-//	_ambiente.setVolume(0); // cambiar a 100 cuando ya este hecho.
-//	_ambiente.setLoop(true);
-//	_ambiente.play();
-	
-	_textPuntaje.setFont(_fuentePuntaje);
-	_textPuntaje.setColor(Color::Black);
-	srand(time(nullptr));
-	
-	suelo.setTexture(textSuelo);
-	suelo.setScale(6.25f, 0.1f);
-	suelo.setPosition(0.0f, 587.f);
-	
-	nuevasPlataformas();
-	for(int i=0;i<cant_plat;i++) 
-		std::cout << i << " " << m_plat[i].getPosition().y << std::endl;
-	
-	
-}
-
-ZonaBoss::~ZonaBoss() { }
-
 bool sat_test(const sf::Sprite &sp1, const sf::Sprite &sp2, sf::Vector2f *out_mtv = nullptr){ // Algoritmo de Pablo Abratte
 	const sf::FloatRect &rectSp1 = sp1.getGlobalBounds();
 	const sf::FloatRect &rectSp2 = sp2.getGlobalBounds();
@@ -72,6 +41,34 @@ bool sat_test(const sf::Sprite &sp1, const sf::Sprite &sp2, sf::Vector2f *out_mt
 	return false;
 }
 
+ZonaBoss::ZonaBoss(Game* game, sf::RenderWindow* wnd) : Escena(game, wnd)
+{
+//	if (!_ambiente.openFromFile("resources/boss.ogg"))
+//		std::cerr << "No se pudo cargar la musica del boss." << std::endl;
+	if (!_fuentePuntaje.loadFromFile("resources/arial.ttf"))
+		std::cerr << "No se pudo cargar el archivo fuente" << std::endl;
+	if (!textSuelo.loadFromFile("resources/platform.png"))
+		std::cerr << "No se pudo cargar el sprite del suelo" << std::endl;
+	score = 0;
+
+//	_ambiente.setVolume(0); // cambiar a 100 cuando ya este hecho.
+//	_ambiente.setLoop(true);
+//	_ambiente.play();
+	
+	_textPuntaje.setFont(_fuentePuntaje);
+	_textPuntaje.setColor(Color::Black);
+	srand(time(nullptr));
+	
+	suelo.setTexture(textSuelo);
+	suelo.setScale(6.25f, 0.1f);
+	suelo.setPosition(0.0f, 587.f);
+	
+	npcs.push_back(new NpcBoss);
+	
+	nuevasPlataformas();
+}
+
+ZonaBoss::~ZonaBoss() { }
 
 void ZonaBoss::Dibujar() 
 {
@@ -134,7 +131,7 @@ void ZonaBoss::ProcesarColisiones()
 		}
 	}
 	
-	for (auto itr_npc : npcs)
+	for (auto &itr_npc : npcs)
 	{
 		if (sat_test(itr_npc->getSprite(), suelo, &vec))
 		{
@@ -146,14 +143,16 @@ void ZonaBoss::ProcesarColisiones()
 			}
 		}
 		
-		if (sat_test(itr_npc->getSprite(), suelo, &vec))
+		for(int i=0;i<cant_plat;i++) 
 		{
-			itr_npc->move(vec);
-			if (vec.y != 0)
-			{
-				itr_npc->setVelocity(sf::Vector2f(itr_npc->getVelocidad().x, 0));
-				if (vec.y <= 0)
-					itr_npc->setJumping(false);
+			if(sat_test(itr_npc->getSprite(), m_plat[i].getSprite(), &vec)){
+				itr_npc->move(vec);
+				if(vec.y !=0)
+				{
+					_jugador.setVelocity({itr_npc->getVelocidad().x, 0});
+					if (vec.y <= 0)
+						itr_npc->setJumping(false);
+				}
 			}
 		}
 	}
@@ -176,7 +175,7 @@ void ZonaBoss::Actualizar(float dt)
 	
 	_jugador.Actualizar(dt);
 	
-	for(auto itr_npc : npcs)
+	for(auto &itr_npc : npcs)
 		itr_npc->Actualizar(dt);
 	
 	if (sf::Keyboard::isKeyPressed(Keyboard::Numpad5))
@@ -185,7 +184,6 @@ void ZonaBoss::Actualizar(float dt)
 
 void ZonaBoss::nuevasPlataformas()
 {
-	std::vector<Plataforma> v_plat;
 	for(int i=0;i<cant_plat;i++)
 	{
 		sf::Vector2f vec(0.f, 0.f);
@@ -240,7 +238,12 @@ void ZonaBoss::nuevasPlataformas()
 				m_plat[i].setPosition(vec);
 				break;
 		}
-		
-		v_plat.push_back(m_plat[i]);
 	}              
+}
+
+
+// sf::Vector2f( cos theta * modulo(vel), sen theta * modulo(vel) ); 
+void direccionarVector(sf::Sprite& sp1, sf::Sprite& sp2, sf::Vector2f& diff, float vel)
+{
+	diff = sf::Vector2f( (sp1.getPosition().x - sp2.getPosition().x) * vel, (sp1.getPosition().y - sp2.getPosition().y) * vel );
 }

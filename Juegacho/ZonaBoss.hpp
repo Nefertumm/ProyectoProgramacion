@@ -39,6 +39,8 @@ public:
 	
 	void GameOver(int score);
 	void nuevasPlataformas();
+	
+	void direccionarVector(sf::Sprite& sp1, sf::Sprite& sp2, sf::Vector2f diff, float vel);
 };
 
 #endif
