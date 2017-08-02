@@ -226,7 +226,10 @@ void ZonaBoss::Actualizar(float dt)
 	
 	// ******* Mecanica de congelar tiempo -- Inicio *******
 	if (freezeCdTimer.getElapsedTime().asSeconds() > 10 && canFreeze == false)
+	{
+		freezeDif = 3;
 		canFreeze = true;
+	}
 	if (freezeTimer.getElapsedTime().asSeconds() > 3 && freezed == true)
 		freezed = false;
 	
@@ -237,9 +240,12 @@ void ZonaBoss::Actualizar(float dt)
 		freezeCdTimer.restart();
 		canFreeze = false;
 	}
-	
 	if (freezed)
-		dt /= 3;
+		if (freezeDif > 1)
+		{
+			freezeDif -= 0.01f;
+			dt /= freezeDif;
+		}
 	
 	// ******* Mecanica de congelar tiempo -- Fin *******
 	

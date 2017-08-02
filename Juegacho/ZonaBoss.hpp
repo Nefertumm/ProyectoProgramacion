@@ -34,6 +34,7 @@ protected:
 	sf::Clock timer, timerPlat, freezeTimer, freezeCdTimer;
 	float difProyPhaseNone, difProyPhaseTwo;
 	bool freezed, canFreeze;
+	float freezeDif;
 	
 public:
 	ZonaBoss(Game* game, sf::RenderWindow* wnd);
