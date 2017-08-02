@@ -266,10 +266,10 @@ void ZonaBoss::Actualizar(float dt)
 	else if (timer.getElapsedTime().asSeconds() > 0.1f && boss.getPhase() == PHASE_ONE)
 	{
 		proy.push_back(new Proyectil);
-		int r = proy.size();
-		proy[r-1]->setPosition(sf::Vector2f(boss.getPosition().x, boss.getPosition().y + boss.getSprite().getTextureRect().height/2.0f));
+		int r = proy.size()-1;
+		proy[r]->setPosition(sf::Vector2f(boss.getPosition().x, boss.getPosition().y + boss.getSprite().getTextureRect().height/2.0f));
 		direccionarVector(boss.getSprite(), &velocidadProyectil, 500.f);
-		proy[r-1]->setVelocity(velocidadProyectil);
+		proy[r]->setVelocity(velocidadProyectil);
 		timer.restart();
 	}
 	else if (timer.getElapsedTime().asSeconds() > difProyPhaseTwo && boss.getPhase() == PHASE_TWO)
@@ -280,10 +280,10 @@ void ZonaBoss::Actualizar(float dt)
 		for(int i=0;i<8;i++) 
 		{
 			proy.push_back(new Proyectil);
-			int r = proy.size();
-			proy[r-1]->setPosition(sf::Vector2f(boss.getPosition().x, boss.getPosition().y + boss.getSprite().getTextureRect().height/2.0f));
+			int r = proy.size()-1;
+			proy[r]->setPosition(sf::Vector2f(boss.getPosition().x, boss.getPosition().y + boss.getSprite().getTextureRect().height/2.0f));
 			direccionarVector(angle, &velocidadProyectil, 250.f);
-			proy[r-1]->setVelocity(velocidadProyectil);
+			proy[r]->setVelocity(velocidadProyectil);
 			angle += 11.25f;
 		}
 		timer.restart();

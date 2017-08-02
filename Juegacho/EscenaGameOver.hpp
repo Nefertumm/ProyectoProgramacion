@@ -14,6 +14,7 @@ protected:
 	sf::Font _fuente;
 	sf::Text _gameOver;
 	sf::Text _ingresarTexto;
+	sf::Music gameOver;
 	InputText _nombre;
 	Puntuacion _puntJugador;
 	

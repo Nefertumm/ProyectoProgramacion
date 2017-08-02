@@ -10,8 +10,12 @@ EscenaGameOver::EscenaGameOver(Game* game, sf::RenderWindow* wnd, int score) : E
 {
 	if (!_fuente.loadFromFile("resources/Equestria.otf"))
 		cerr << "No se encontro la fuente de la escena GameOver" << endl;
+	if (!gameOver.openFromFile("resources/GameOver.ogg"))
+		cerr << "No se encontro el sonido de la escena GameOver" << endl;
 	
 	_puntJugador._puntos = score;
+	gameOver.setVolume(100);
+	gameOver.play();
 	
 	_nombre.setPosition(400,300);
 	_nombre.setMaxChars(15); 
