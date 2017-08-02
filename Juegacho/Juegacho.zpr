@@ -20,7 +20,7 @@ path=main.cpp
 cursor=6:1
 [source]
 path=Game.cpp
-cursor=28:1
+cursor=9:72
 [source]
 path=Escena.cpp
 cursor=4:21
@@ -33,7 +33,7 @@ cursor=58:100
 open=true
 [source]
 path=ZonaBoss.cpp
-cursor=275:2
+cursor=55:29
 open=true
 [source]
 path=Animaciones.cpp
@@ -43,10 +43,10 @@ path=EscenaPuntuacion.cpp
 cursor=25:2
 [source]
 path=EscenaGameOver.cpp
-cursor=12:1
+cursor=62:3
 [source]
 path=ManejoPuntuacion.cpp
-cursor=2:0
+cursor=45:26
 [source]
 path=Plataforma.cpp
 cursor=9:27

@@ -7,7 +7,7 @@ using namespace std;
 
 Game::Game()
 {
-	wnd = new RenderWindow(sf::VideoMode(800,600), "Injusticia hecha juego"/*, sf::Style::Titlebar|sf::Style::Close*/);
+	wnd = new RenderWindow(sf::VideoMode(800,600), "Injusticia hecha juego");
 	wnd->setFramerateLimit(60);
 	
 	_escenaAnterior = nullptr;
@@ -17,7 +17,6 @@ Game::Game()
 	ifstream archi("puntaje.dat", ios::binary);
 	if (!archi.is_open())
 	{
-		cerr << "No se encuentra el archivo puntaje.dat" << endl;
 		ofstream archiCrear("puntaje.dat", ios::binary|ios::trunc);
 		archiCrear.close();
 		return;
@@ -50,8 +49,6 @@ Game::~Game()
 
 void Game::CambiarEscena(Escena* nuevaEscena)
 {
-//	if (_escenaActual != nullptr)
-//	  	delete _escenaActual;
 	_escenaAnterior = _escenaActual;
 	_escenaActual = nuevaEscena;
 }

@@ -47,7 +47,7 @@ ZonaBoss::ZonaBoss(Game* game, sf::RenderWindow* wnd) : Escena(game, wnd)
 		std::cerr << "No se pudo cargar la musica del boss." << std::endl;
 	if (!fuentePuntaje.loadFromFile("resources/arial.ttf"))
 		std::cerr << "No se pudo cargar el archivo fuente" << std::endl;
-	if (!textSuelo.loadFromFile("resources/platform.png"))
+	if (!textSuelo.loadFromFile("resources/suelo.png"))
 		std::cerr << "No se pudo cargar la textura del suelo" << std::endl;
 	if (!textFondo.loadFromFile("resources/fondo.jpg"))
 		std::cerr << "No se pudo cargar la textura del fondo" << std::endl;
@@ -63,7 +63,6 @@ ZonaBoss::ZonaBoss(Game* game, sf::RenderWindow* wnd) : Escena(game, wnd)
 	srand(time(nullptr));
 	
 	suelo.setTexture(textSuelo);
-	suelo.setScale(6.25f, 0.1f);
 	suelo.setPosition(0.0f, 587.f);
 	timer.restart();
 	timerPlat.restart();
