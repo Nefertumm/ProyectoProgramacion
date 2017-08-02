@@ -41,7 +41,7 @@ bool sat_test(const sf::Sprite &sp1, const sf::Sprite &sp2, sf::Vector2f *out_mt
 	return false;
 }
 
-ZonaBoss::ZonaBoss(Game* game, sf::RenderWindow* wnd) : Escena(game, wnd)
+ZonaBoss::ZonaBoss(Game* game, sf::RenderWindow* wnd) : Escena(game, wnd), freezed(false), canFreeze(false) 
 {
 	if (!ambiente.openFromFile("resources/boss.ogg"))
 		std::cerr << "No se pudo cargar la musica del boss." << std::endl;
@@ -66,6 +66,8 @@ ZonaBoss::ZonaBoss(Game* game, sf::RenderWindow* wnd) : Escena(game, wnd)
 	suelo.setPosition(0.0f, 587.f);
 	timer.restart();
 	timerPlat.restart();
+	freezeTimer.restart();
+	freezeCdTimer.restart();
 	
 	npcs.push_back(new NpcBoss);
 	
@@ -134,7 +136,7 @@ void ZonaBoss::ProcesarColisiones()
 		}
 	}
 	
-	if (sat_test(jugador.getSprite(), boss.getSprite()))
+	if (sat_test(jugador.getSprite(), boss.getSprite()) && !jugador.isGod())
 		GameOver(score);
 	
 	if (sat_test(jugador.getSprite(), suelo, &vec))
@@ -158,7 +160,7 @@ void ZonaBoss::ProcesarColisiones()
 				itr_npc->setJumping(false);
 			}
 		}
-		if (sat_test(jugador.getSprite(), itr_npc->getSprite()))
+		if (sat_test(jugador.getSprite(), itr_npc->getSprite()) && !jugador.isGod())
 			GameOver(score);
 		
 		for(int i=0;i<cant_plat;i++) 
@@ -187,12 +189,12 @@ void ZonaBoss::ProcesarColisiones()
 		{
 			if (sat_test(m_plat[i]->getSprite(), itr_proy->getSprite(), &vec))
 			{
-				if (vec.x == 0 && vec.y != 0)
-					itr_proy->setVelocity({ itr_proy->getVelocidad().x, -itr_proy->getVelocidad().y });
-				else if (vec.x != 0 && vec.y == 0)
-					itr_proy->setVelocity({ -itr_proy->getVelocidad().x, itr_proy->getVelocidad().y });
-				else if (vec.x != 0 && vec.y != 0)
-					itr_proy->setVelocity({ -itr_proy->getVelocidad().x, -itr_proy->getVelocidad().y });
+				if (vec.y != 0)
+					if (vec.y*itr_proy->getVelocidad().y>0)
+						itr_proy->setVelocity({ itr_proy->getVelocidad().x, -itr_proy->getVelocidad().y });
+				if (vec.x != 0)
+					if (vec.x*itr_proy->getVelocidad().x>0)
+						itr_proy->setVelocity({ -itr_proy->getVelocidad().x, itr_proy->getVelocidad().y });
 					
 			}
 		}
@@ -201,10 +203,10 @@ void ZonaBoss::ProcesarColisiones()
 	for(auto &itr_proy : proy)
 	{
 		if (sat_test(itr_proy->getSprite(), suelo, &vec))
-			if(vec.y !=0)
+			if (vec.y != 0)
 				itr_proy->setVelocity({itr_proy->getVelocidad().x, -itr_proy->getVelocidad().y});
 		
-		if (sat_test(jugador.getSprite(), itr_proy->getSprite()))
+		if (sat_test(jugador.getSprite(), itr_proy->getSprite()) && !jugador.isGod())
 			GameOver(score);
 	}
 }
@@ -222,18 +224,43 @@ void ZonaBoss::Actualizar(float dt)
 	sc << "Score: " << int(score);
 	textPuntaje.setString(sc.str());
 	
+	// ******* Mecanica de congelar tiempo -- Inicio *******
+	if (freezeCdTimer.getElapsedTime().asSeconds() > 10 && canFreeze == false)
+		canFreeze = true;
+	if (freezeTimer.getElapsedTime().asSeconds() > 3 && freezed == true)
+		freezed = false;
+	
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F) && canFreeze)
+	{
+		freezeTimer.restart();
+		freezed = true;
+		freezeCdTimer.restart();
+		canFreeze = false;
+	}
+	
+	if (freezed)
+		dt /= 3;
+	
+	// ******* Mecanica de congelar tiempo -- Fin *******
+	
 	jugador.Actualizar(dt);
 	boss.Actualizar(dt);
+	
+	auto npcs_end = std::remove_if(npcs.begin(), npcs.end(), NpcBoss::outOfScreen);
+	npcs.erase(npcs_end, npcs.end()); // el remove_if no hace un resize del vector.
+	auto proy_end = std::remove_if(proy.begin(), proy.end(), Proyectil::outOfScreen);
+	proy.erase(proy_end, proy.end());
+	
 	
 	sf::Vector2f velocidadProyectil(0.f, 0.f);
 	if (timer.getElapsedTime().asSeconds() > difProyPhaseNone && boss.getPhase() == PHASE_NONE)
 	{
 		difProyPhaseNone -= 0.15f;
 		proy.push_back(new Proyectil);
-		int r = proy.size();
-		proy[r-1]->setPosition(sf::Vector2f(boss.getPosition().x, boss.getPosition().y + boss.getSprite().getTextureRect().height/2.0f));
+		int r = proy.size()-1;
+		proy[r]->setPosition(sf::Vector2f(boss.getPosition().x, boss.getPosition().y + boss.getSprite().getTextureRect().height/2.0f));
 		direccionarVector(jugador.getSprite(), boss.getSprite(), &velocidadProyectil, 500.f);
-		proy[r-1]->setVelocity(velocidadProyectil);
+		proy[r]->setVelocity(velocidadProyectil);
 		timer.restart();
 	}
 	else if (timer.getElapsedTime().asSeconds() > 0.1f && boss.getPhase() == PHASE_ONE)
@@ -347,8 +374,8 @@ void ZonaBoss::direccionarVector(const sf::Sprite &sp1, const sf::Sprite &sp2, s
 
 void ZonaBoss::direccionarVector(const sf::Sprite &sp, sf::Vector2f *diff, float vel)
 {
-	float cosx = -cos((sp.getRotation() * 3.1415) / 180);
-	float seny = -sin((sp.getRotation() * 3.1415) / 180);
+	float cosx = -cos(sp.getRotation() * G2R);
+	float seny = -sin(sp.getRotation() * G2R);
 	float unitario = sqrt(pow(cosx, 2) + pow(seny, 2));
 	diff->x = (cosx / unitario) * vel;
 	diff->y = (seny / unitario) * vel;
@@ -356,8 +383,8 @@ void ZonaBoss::direccionarVector(const sf::Sprite &sp, sf::Vector2f *diff, float
 
 void ZonaBoss::direccionarVector(float angle, sf::Vector2f *diff, float vel)
 {
-	float cosx = cos((angle * 3.1415) / 180);
-	float seny = sin((angle * 3.1415) / 180);
+	float cosx = cos(angle * G2R);
+	float seny = sin(angle * G2R);
 	diff->x = cosx * vel;
 	diff->y = seny * vel;
 }

@@ -21,6 +21,9 @@ protected:
 	bool canDoubleJump;
 	bool keyReleased;
 	
+	// Extras:
+	bool god, canBeAGod; sf::Clock godCd, godTime;
+	
 	// Animaciones
 	Animaciones* anim;
 	bool mIzquierda;
@@ -37,6 +40,7 @@ public:
 	void setVelocity(sf::Vector2f vel) { velocidad = vel; }
 	void move(sf::Vector2f v) { sprite.move(v); }
 	void setJumping(bool jump) { isJumping = jump; canDoubleJump = true;}
+	bool isGod() { return god; }
 	
 	sf::Vector2f getVelocidad() { return velocidad; }
 	bool estaSaltando() { return isJumping; }

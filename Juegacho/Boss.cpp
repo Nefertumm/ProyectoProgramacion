@@ -8,6 +8,7 @@ Boss::Boss() : phase(PHASE_NONE), movementSpeed(250.f), down(false)
 	
 	sprite.setTexture(texture);
 	sprite.setScale(1.5f, 1.5f);
+	sprite.setOrigin({ 59.f * 0.5f, 73.f * 0.5f });
 	sprite.setPosition(sf::Vector2f(923.f - (sprite.getTextureRect().width/2.f * sprite.getScale().x), 600.f - (sprite.getTextureRect().height * sprite.getScale().y + 13.f)));
 	
 	velocidad = 0.f;

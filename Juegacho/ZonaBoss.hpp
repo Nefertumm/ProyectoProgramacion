@@ -15,6 +15,7 @@
 #include "NpcBoss.hpp"
 
 #define cant_plat 6
+const double G2R = 3.1415/180;
 
 class ZonaBoss : public Escena 
 {
@@ -30,8 +31,9 @@ protected:
 	std::vector<NpcBoss*> npcs;
 	Boss boss;
 	std::vector<Proyectil*> proy;
-	sf::Clock timer, timerPlat;
+	sf::Clock timer, timerPlat, freezeTimer, freezeCdTimer;
 	float difProyPhaseNone, difProyPhaseTwo;
+	bool freezed, canFreeze;
 	
 public:
 	ZonaBoss(Game* game, sf::RenderWindow* wnd);

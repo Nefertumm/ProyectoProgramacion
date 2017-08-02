@@ -3,7 +3,7 @@
 #include <cmath>
 using namespace std;
 
-Jugador::Jugador() : isJumping(false), canDoubleJump(true), keyReleased(true)
+Jugador::Jugador() : isJumping(false), canDoubleJump(true), keyReleased(true), god(false), canBeAGod(true)
 {	
 	if (!texture.loadFromFile("resources/jugador.png"))
 		std::cerr << "No se pudo encontrar la textura" << std::endl;
@@ -19,6 +19,9 @@ Jugador::Jugador() : isJumping(false), canDoubleJump(true), keyReleased(true)
 	
 	mIzquierda = false;
 	anim = new Animaciones(&texture, sf::Vector2u(8, 3), 0.1f);
+	
+	godCd.restart();
+	godTime.restart();
 
 	velocidad = { 0.f, 0.f };
 }
@@ -65,6 +68,21 @@ void Jugador::Actualizar(float dt)
 		velocidad.y = (float)-sqrtf(2.0f * velGravedad * dSalto);
 		sprite.setPosition(sprite.getPosition().x, sprite.getPosition().y-1);
 	}
+	
+	// ******** Mecanica de Dios -- Inicio. ********
+	if (godCd.getElapsedTime().asSeconds() > 6 && canBeAGod == false)
+		canBeAGod = true;
+	if (godTime.getElapsedTime().asSeconds() > 2 && god == true)
+		god = false;
+	
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::G) && canBeAGod)
+	{
+		godTime.restart();
+		god = true;
+		canBeAGod = false;
+		godCd.restart();
+	}
+	// ******* Mecanica de Dios -- Final. ********
 	
 	velocidad.y += dt * velGravedad;
 	

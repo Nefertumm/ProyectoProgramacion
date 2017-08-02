@@ -29,8 +29,16 @@ public:
 	void setVelocity(sf::Vector2f vel) { velocidad = vel; }
 	
 	sf::Vector2f getVelocidad() { return velocidad; }
+	sf::Vector2f getPosition() { return sprite.getPosition(); }
 	bool estaSaltando() { return isJumping; }
 	void keyRel(bool keyReleased) { this->keyReleased = keyReleased; }
+	static bool outOfScreen(NpcBoss* npc)
+	{
+		if (npc->getPosition().x < 0.f || npc->getPosition().x > 800.f || npc->getPosition().y < 0.f || npc->getPosition().y > 600.f)
+			return true;
+		
+		return false;
+	}
 };
 
 #endif
