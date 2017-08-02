@@ -7,10 +7,15 @@ Jugador::Jugador() : isJumping(false), canDoubleJump(true), keyReleased(true)
 {	
 	if (!texture.loadFromFile("resources/jugador.png"))
 		std::cerr << "No se pudo encontrar la textura" << std::endl;
+	if (!hitBoxText.loadFromFile("resources/hitBox.png"))
+		std::cerr << "No se pudo encontrar la textura" << std::endl;
 	
 	sprite.setTexture(texture);
 	
 	sprite.setPosition(0.0f, 550.f);
+	
+	hitBox.setTexture(hitBoxText);
+	hitBox.setPosition(sf::Vector2f(sprite.getPosition().x + 15.f, sprite.getPosition().y));
 	
 	mIzquierda = false;
 	anim = new Animaciones(&texture, sf::Vector2u(8, 3), 0.1f);
@@ -26,6 +31,7 @@ Jugador::~Jugador()
 void Jugador::Dibujar(sf::RenderWindow* wnd)
 {
 	wnd->draw(sprite);
+	wnd->draw(hitBox);
 }
 
 void Jugador::Actualizar(float dt)
@@ -60,12 +66,13 @@ void Jugador::Actualizar(float dt)
 		sprite.setPosition(sprite.getPosition().x, sprite.getPosition().y-1);
 	}
 	
-	if(isJumping)
-		velocidad.y += dt * velGravedad;
+	velocidad.y += dt * velGravedad;
 	
 	anim->Actualizar(fila, dt, mIzquierda);
 	sprite.setTextureRect(anim->uvRect);
 	sprite.move(velocidad * dt);
+	
+	hitBox.setPosition(sf::Vector2f(sprite.getPosition().x + 15.f, sprite.getPosition().y));
 	
 	mantenerJugadorEnPantalla();
 }

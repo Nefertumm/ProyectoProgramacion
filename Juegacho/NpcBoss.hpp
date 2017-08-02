@@ -13,7 +13,10 @@ protected:
 	sf::Vector2f velocidad;
 	bool isJumping;
 	const float velGravedad = 1800.f;
-	const float dSalto = 150.f;
+	const float dSalto = 110.f;
+	bool canDoubleJump;
+	bool keyReleased;
+	
 public:
 	NpcBoss();
 	~NpcBoss();
@@ -22,11 +25,12 @@ public:
 	void Actualizar(float dt);
 	sf::Sprite getSprite() { return sprite; }
 	void move(sf::Vector2f v) { sprite.move(v); }
-	bool setJumping(bool jump) { isJumping = jump; }
+	bool setJumping(bool jump) { isJumping = jump; canDoubleJump = true; }
 	void setVelocity(sf::Vector2f vel) { velocidad = vel; }
 	
 	sf::Vector2f getVelocidad() { return velocidad; }
 	bool estaSaltando() { return isJumping; }
+	void keyRel(bool keyReleased) { this->keyReleased = keyReleased; }
 };
 
 #endif

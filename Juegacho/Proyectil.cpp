@@ -3,13 +3,15 @@
 
 Proyectil::Proyectil()
 {
-	if (!_texture.loadFromFile("resources/proyectil.png"))
+	if (!texture.loadFromFile("resources/proyectil.png"))
 		std::cerr << "No se pudo cargar la textura del proyectil" << std::endl;
 	
-	_sprite.setTexture(_texture);
-	anim = new Animaciones(&_texture, sf::Vector2u(5, 1), 0.1f);
+	sprite.setTexture(texture);
+	anim = new Animaciones(&texture, sf::Vector2u(5, 1), 0.1f);
 	
-	_sprite.setPosition(150.f, 300.f);
+	sprite.setScale(0.5f, 0.5f);
+	
+	velocidad = { 0.f, 0.f };
 }
 
 Proyectil::~Proyectil() 
@@ -19,11 +21,13 @@ Proyectil::~Proyectil()
 
 void Proyectil::Actualizar(float dt)
 {
+	sprite.move(velocidad * dt);
+	
 	anim->Actualizar(0, dt);
-	_sprite.setTextureRect(anim->uvRect);
+	sprite.setTextureRect(anim->uvRect);
 }
 
 void Proyectil::Dibujar(sf::RenderWindow* wnd)
 {
-	wnd->draw(_sprite);
+	wnd->draw(sprite);
 }

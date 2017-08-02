@@ -8,10 +8,12 @@ class Jugador
 protected:
 	sf::Texture texture;
 	sf::Sprite sprite;
+	sf::Texture hitBoxText;
+	sf::Sprite hitBox;
 	
 	// Constantes:
 	const float velGravedad = 1800.f;
-	const float dSalto = 150.f;
+	const float dSalto = 110.f;
 	const float movementSpeed = 300.f;
 	
 	bool isJumping;
@@ -38,7 +40,7 @@ public:
 	
 	sf::Vector2f getVelocidad() { return velocidad; }
 	bool estaSaltando() { return isJumping; }
-	sf::Sprite getSprite() { return sprite; }
+	sf::Sprite getSprite() { return hitBox; }
 	void keyRel(bool keyReleased) { this->keyReleased = keyReleased; }
 };
 

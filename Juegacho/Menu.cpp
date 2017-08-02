@@ -9,12 +9,12 @@ Menu::Menu(Game* game, RenderWindow* wnd): Escena(game, wnd)
 	if(!_fuente.loadFromFile("resources/Equestria.otf")) 
 		std::cerr << "No se encontro la fuente del menu" << std::endl;
 	
-//	if (!_music.openFromFile("resources/menu.ogg"))
-//		std::cerr << "No se encontro el archivo de audio del menu" << std::endl;
+	if (!_music.openFromFile("resources/menu.ogg"))
+		std::cerr << "No se encontro el archivo de audio del menu" << std::endl;
 	
-//	_music.setVolume(0);
-//	_music.setLoop(true);
-//	_music.play();
+	_music.setVolume(70);
+	_music.setLoop(true);
+	_music.play();
 	
 	_mensajeTitulo.setFont(_fuente);
 	_mensajeTitulo.setString("Injusticia hecha juego");

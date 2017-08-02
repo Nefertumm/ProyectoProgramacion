@@ -19,14 +19,19 @@
 class ZonaBoss : public Escena 
 {
 protected:
-//	sf::Music _ambiente;
-	sf::Text _textPuntaje;
-	sf::Font _fuentePuntaje;
+	sf::Music ambiente;
+	sf::Text textPuntaje;
+	sf::Font fuentePuntaje;
 	sf::Texture textSuelo; sf::Sprite suelo; // suelo
-	Jugador _jugador;
+	sf::Texture textFondo; sf::Sprite fondo;
+	Jugador jugador;
 	float score;
-	Plataforma m_plat[cant_plat];
+	std::vector<Plataforma*> m_plat;
 	std::vector<NpcBoss*> npcs;
+	Boss boss;
+	std::vector<Proyectil*> proy;
+	sf::Clock timer, timerPlat;
+	float difProyPhaseNone, difProyPhaseTwo;
 	
 public:
 	ZonaBoss(Game* game, sf::RenderWindow* wnd);
@@ -40,7 +45,9 @@ public:
 	void GameOver(int score);
 	void nuevasPlataformas();
 	
-	void direccionarVector(sf::Sprite& sp1, sf::Sprite& sp2, sf::Vector2f diff, float vel);
+	void direccionarVector(const sf::Sprite &sp1, const sf::Sprite &sp2, sf::Vector2f *diff, float vel);
+	void direccionarVector(const sf::Sprite &sp, sf::Vector2f *diff, float vel);
+	void direccionarVector(float angle, sf::Vector2f *diff, float vel);
 };
 
 #endif

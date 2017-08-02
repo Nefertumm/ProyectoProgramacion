@@ -6,15 +6,22 @@
 class Proyectil 
 {
 protected:
-	sf::Sprite _sprite;
-	sf::Texture _texture;
+	sf::Sprite sprite;
+	sf::Texture texture;
 	Animaciones* anim;
+	sf::Vector2f velocidad;
 public:
 	Proyectil();
 	~Proyectil();
 	
 	void Actualizar(float dt);
 	void Dibujar(sf::RenderWindow* wnd);
+	void setVelocity(sf::Vector2f vec) { velocidad = vec; }
+	sf::Vector2f getVelocidad() { return velocidad;}
+	void setPosition(sf::Vector2f pos) { sprite.setPosition(pos); }
+	sf::Vector2f getPosition() { return sprite.getPosition(); }
+	sf::Sprite getSprite() { return sprite; }
+	void move(sf::Vector2f v) { sprite.move(v); };
 };
 
 #endif

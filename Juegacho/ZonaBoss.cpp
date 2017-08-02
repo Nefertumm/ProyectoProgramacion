@@ -43,41 +43,51 @@ bool sat_test(const sf::Sprite &sp1, const sf::Sprite &sp2, sf::Vector2f *out_mt
 
 ZonaBoss::ZonaBoss(Game* game, sf::RenderWindow* wnd) : Escena(game, wnd)
 {
-//	if (!_ambiente.openFromFile("resources/boss.ogg"))
-//		std::cerr << "No se pudo cargar la musica del boss." << std::endl;
-	if (!_fuentePuntaje.loadFromFile("resources/arial.ttf"))
+	if (!ambiente.openFromFile("resources/boss.ogg"))
+		std::cerr << "No se pudo cargar la musica del boss." << std::endl;
+	if (!fuentePuntaje.loadFromFile("resources/arial.ttf"))
 		std::cerr << "No se pudo cargar el archivo fuente" << std::endl;
 	if (!textSuelo.loadFromFile("resources/platform.png"))
-		std::cerr << "No se pudo cargar el sprite del suelo" << std::endl;
+		std::cerr << "No se pudo cargar la textura del suelo" << std::endl;
+	if (!textFondo.loadFromFile("resources/fondo.jpg"))
+		std::cerr << "No se pudo cargar la textura del fondo" << std::endl;
 	score = 0;
 
-//	_ambiente.setVolume(0); // cambiar a 100 cuando ya este hecho.
-//	_ambiente.setLoop(true);
-//	_ambiente.play();
+	fondo.setTexture(textFondo);
+	ambiente.setVolume(70); 
+	ambiente.setLoop(true);
+	ambiente.play();
 	
-	_textPuntaje.setFont(_fuentePuntaje);
-	_textPuntaje.setColor(Color::Black);
+	textPuntaje.setFont(fuentePuntaje);
+	textPuntaje.setColor(Color::Black);
 	srand(time(nullptr));
 	
 	suelo.setTexture(textSuelo);
 	suelo.setScale(6.25f, 0.1f);
 	suelo.setPosition(0.0f, 587.f);
+	timer.restart();
+	timerPlat.restart();
 	
 	npcs.push_back(new NpcBoss);
 	
+	difProyPhaseNone = 1.75f;
+	difProyPhaseTwo = 1.f;
 	nuevasPlataformas();
 }
 
 ZonaBoss::~ZonaBoss() { }
-
 void ZonaBoss::Dibujar() 
 {
 	_wnd->clear(sf::Color::White);
-	_wnd->draw(_textPuntaje);
+	_wnd->draw(fondo);
+	_wnd->draw(textPuntaje);
 	_wnd->draw(suelo);
-	_jugador.Dibujar(_wnd);
-	for(int i=0;i<cant_plat;i++) 
-		m_plat[i].Dibujar(_wnd);
+	jugador.Dibujar(_wnd);
+	boss.Dibujar(_wnd);
+	for(auto &itr_proy : proy)
+		itr_proy->Dibujar(_wnd);
+	for(auto &itr_plat : m_plat) 
+		itr_plat->Dibujar(_wnd);
 	for (auto &itr_npc : npcs)
 		itr_npc->Dibujar(_wnd);
 	_wnd->display();
@@ -95,7 +105,11 @@ void ZonaBoss::ProcesarEventos()
 				break;
 			case sf::Event::KeyReleased:
 				if (e.key.code == sf::Keyboard::Up)
-					_jugador.keyRel(true);
+				{
+					jugador.keyRel(true);
+					for(auto &itr_npc : npcs)
+						itr_npc->keyRel(true);
+				}
 				break;
 			default:
 				break;
@@ -103,31 +117,34 @@ void ZonaBoss::ProcesarEventos()
 	}
 }
 
-void ZonaBoss::ProcesarColisiones() 
+void ZonaBoss::ProcesarColisiones()
 {
 	sf::Vector2f vec(0.f, 0.f);
 	for(int i=0;i<cant_plat;i++) 
 	{
-		if(sat_test(_jugador.getSprite(), m_plat[i].getSprite(), &vec)){
-			_jugador.move(vec);
+		if(sat_test(jugador.getSprite(), m_plat[i]->getSprite(), &vec)){
+			jugador.move(vec);
 			if(vec.x != 0)
-				_jugador.setVelocity({0, _jugador.getVelocidad().y});
+				jugador.setVelocity({0, jugador.getVelocidad().y});
 			if(vec.y !=0)
 			{
-				_jugador.setVelocity({_jugador.getVelocidad().x, 0});
+				jugador.setVelocity({jugador.getVelocidad().x, 0});
 				if (vec.y <= 0)
-					_jugador.setJumping(false);
+					jugador.setJumping(false);
 			}
 		}
 	}
 	
-	if (sat_test(_jugador.getSprite(), suelo, &vec))
+	if (sat_test(jugador.getSprite(), boss.getSprite()))
+		GameOver(score);
+	
+	if (sat_test(jugador.getSprite(), suelo, &vec))
 	{
-		_jugador.move(vec);
+		jugador.move(vec);
 		if(vec.y !=0)
 		{
-			_jugador.setVelocity({_jugador.getVelocidad().x, 0});
-			_jugador.setJumping(false);
+			jugador.setVelocity({jugador.getVelocidad().x, 0});
+			jugador.setJumping(false);
 		}
 	}
 	
@@ -142,22 +159,55 @@ void ZonaBoss::ProcesarColisiones()
 				itr_npc->setJumping(false);
 			}
 		}
+		if (sat_test(jugador.getSprite(), itr_npc->getSprite()))
+			GameOver(score);
 		
 		for(int i=0;i<cant_plat;i++) 
 		{
-			if(sat_test(itr_npc->getSprite(), m_plat[i].getSprite(), &vec)){
+			if(sat_test(itr_npc->getSprite(), m_plat[i]->getSprite(), &vec)){
 				itr_npc->move(vec);
 				if(vec.y !=0)
 				{
-					_jugador.setVelocity({itr_npc->getVelocidad().x, 0});
+					itr_npc->setVelocity({itr_npc->getVelocidad().x, 0});
 					if (vec.y <= 0)
 						itr_npc->setJumping(false);
 				}
 			}
 		}
 	}
-//	if (sat_test(_jugador.getSprite(), npc.getSprite()))
-//		GameOver(score);
+	
+	if (sat_test(boss.getSprite(), suelo, &vec))
+	{
+		npcs.push_back(new NpcBoss);
+		boss.setDown(false);
+	}
+	
+	for(int i=0;i<cant_plat;i++) 
+	{
+		for(auto &itr_proy : proy)
+		{
+			if (sat_test(m_plat[i]->getSprite(), itr_proy->getSprite(), &vec))
+			{
+				if (vec.x == 0 && vec.y != 0)
+					itr_proy->setVelocity({ itr_proy->getVelocidad().x, -itr_proy->getVelocidad().y });
+				else if (vec.x != 0 && vec.y == 0)
+					itr_proy->setVelocity({ -itr_proy->getVelocidad().x, itr_proy->getVelocidad().y });
+				else if (vec.x != 0 && vec.y != 0)
+					itr_proy->setVelocity({ -itr_proy->getVelocidad().x, -itr_proy->getVelocidad().y });
+					
+			}
+		}
+	}
+	
+	for(auto &itr_proy : proy)
+	{
+		if (sat_test(itr_proy->getSprite(), suelo, &vec))
+			if(vec.y !=0)
+				itr_proy->setVelocity({itr_proy->getVelocidad().x, -itr_proy->getVelocidad().y});
+		
+		if (sat_test(jugador.getSprite(), itr_proy->getSprite()))
+			GameOver(score);
+	}
 }
 
 
@@ -171,30 +221,75 @@ void ZonaBoss::Actualizar(float dt)
 	score += dt;
 	std::stringstream sc;
 	sc << "Score: " << int(score);
-	_textPuntaje.setString(sc.str());
+	textPuntaje.setString(sc.str());
 	
-	_jugador.Actualizar(dt);
+	jugador.Actualizar(dt);
+	boss.Actualizar(dt);
+	
+	sf::Vector2f velocidadProyectil(0.f, 0.f);
+	if (timer.getElapsedTime().asSeconds() > difProyPhaseNone && boss.getPhase() == PHASE_NONE)
+	{
+		difProyPhaseNone -= 0.15f;
+		proy.push_back(new Proyectil);
+		int r = proy.size();
+		proy[r-1]->setPosition(sf::Vector2f(boss.getPosition().x, boss.getPosition().y + boss.getSprite().getTextureRect().height/2.0f));
+		direccionarVector(jugador.getSprite(), boss.getSprite(), &velocidadProyectil, 500.f);
+		proy[r-1]->setVelocity(velocidadProyectil);
+		timer.restart();
+	}
+	else if (timer.getElapsedTime().asSeconds() > 0.1f && boss.getPhase() == PHASE_ONE)
+	{
+		proy.push_back(new Proyectil);
+		int r = proy.size();
+		proy[r-1]->setPosition(sf::Vector2f(boss.getPosition().x, boss.getPosition().y + boss.getSprite().getTextureRect().height/2.0f));
+		direccionarVector(boss.getSprite(), &velocidadProyectil, 500.f);
+		proy[r-1]->setVelocity(velocidadProyectil);
+		timer.restart();
+	}
+	else if (timer.getElapsedTime().asSeconds() > difProyPhaseTwo && boss.getPhase() == PHASE_TWO)
+	{
+		if (difProyPhaseTwo > 0.5f)
+			difProyPhaseTwo -= 0.01f;
+		int angle = 135;
+		for(int i=0;i<8;i++) 
+		{
+			proy.push_back(new Proyectil);
+			int r = proy.size();
+			proy[r-1]->setPosition(sf::Vector2f(boss.getPosition().x, boss.getPosition().y + boss.getSprite().getTextureRect().height/2.0f));
+			direccionarVector(angle, &velocidadProyectil, 250.f);
+			proy[r-1]->setVelocity(velocidadProyectil);
+			angle += 11.25f;
+		}
+		timer.restart();
+	}
+	
+	for(auto &itr_proy : proy)
+		itr_proy->Actualizar(dt);
 	
 	for(auto &itr_npc : npcs)
 		itr_npc->Actualizar(dt);
 	
-	if (sf::Keyboard::isKeyPressed(Keyboard::Numpad5))
-		GameOver(score);
+	if (timerPlat.getElapsedTime().asSeconds() > 10)
+	{
+		timerPlat.restart();
+		nuevasPlataformas();
+	}
 }
 
 void ZonaBoss::nuevasPlataformas()
 {
+	m_plat.clear();
 	for(int i=0;i<cant_plat;i++)
 	{
+		m_plat.push_back(new Plataforma);
 		sf::Vector2f vec(0.f, 0.f);
 		switch (i)
 		{ 
 			case 0:
 				vec = { float(80+rand()%(130+1)), float(100+rand()%(150+1)) };
-				m_plat[i].setPosition(vec);
 				if (vec.y >= 200)
 					vec.y = 150.f;
-				m_plat[i].setPosition(vec);
+				m_plat[i]->setPosition(vec);
 				break;
 			case 1:
 				vec = { float(300+rand()%(450+1)), float(100+rand()%(150+1)) };
@@ -202,13 +297,13 @@ void ZonaBoss::nuevasPlataformas()
 					vec.x = 400.f;
 				if (vec.y >= 200)
 					vec.y =150.f;
-				m_plat[i].setPosition(vec);
+				m_plat[i]->setPosition(vec);
 				break;
 			case 2:
 				vec = { float(80+rand()%(130+1)), float(150+rand()%(180+1)) };
 				if (vec.y <= 250)
 					vec.y = 350.f;
-				m_plat[i].setPosition(vec);
+				m_plat[i]->setPosition(vec);
 				break;
 			case 3:
 				vec = { float(300+rand()%(450+1)), float(150+rand()%(180+1)) };
@@ -216,16 +311,15 @@ void ZonaBoss::nuevasPlataformas()
 					vec.y = 350.f;
 				if (vec.x >= 500)
 					vec.x = 400.f;
-				m_plat[i].setPosition(vec);
+				m_plat[i]->setPosition(vec);
 				break;
 			case 4:
 				vec = { float(80+rand()%(130+1)), float(250+rand()%(280+1)) };
-				m_plat[i].setPosition(vec);
 				if (vec.y <= 400)
 					vec.y = 450.f;
 				if (vec.y >= 500)
 					vec.y = 450.f;
-				m_plat[i].setPosition(vec);
+				m_plat[i]->setPosition(vec);
 				break;
 			case 5:
 				vec = { float(300+rand()%(450+1)), float(250+rand()%(280+1)) };
@@ -235,15 +329,36 @@ void ZonaBoss::nuevasPlataformas()
 					vec.y = 450.f;
 				if (vec.y >= 500)
 					vec.y = 450.f;
-				m_plat[i].setPosition(vec);
+				m_plat[i]->setPosition(vec);
 				break;
 		}
 	}              
 }
 
 
-// sf::Vector2f( cos theta * modulo(vel), sen theta * modulo(vel) ); 
-void direccionarVector(sf::Sprite& sp1, sf::Sprite& sp2, sf::Vector2f& diff, float vel)
+
+void ZonaBoss::direccionarVector(const sf::Sprite &sp1, const sf::Sprite &sp2, sf::Vector2f *diff, float vel)
 {
-	diff = sf::Vector2f( (sp1.getPosition().x - sp2.getPosition().x) * vel, (sp1.getPosition().y - sp2.getPosition().y) * vel );
+	float dx = (sp1.getPosition().x - sp2.getPosition().x);
+	float dy = (sp1.getPosition().y - sp2.getPosition().y);
+	float unitario = float(sqrt(pow(dx, 2) + pow(dy, 2)));
+	diff->x = (dx / unitario) * vel;
+	diff->y = (dy / unitario) * vel;
+}
+
+void ZonaBoss::direccionarVector(const sf::Sprite &sp, sf::Vector2f *diff, float vel)
+{
+	float cosx = -cos((sp.getRotation() * 3.1415) / 180);
+	float seny = -sin((sp.getRotation() * 3.1415) / 180);
+	float unitario = sqrt(pow(cosx, 2) + pow(seny, 2));
+	diff->x = (cosx / unitario) * vel;
+	diff->y = (seny / unitario) * vel;
+}
+
+void ZonaBoss::direccionarVector(float angle, sf::Vector2f *diff, float vel)
+{
+	float cosx = cos((angle * 3.1415) / 180);
+	float seny = sin((angle * 3.1415) / 180);
+	diff->x = cosx * vel;
+	diff->y = seny * vel;
 }
