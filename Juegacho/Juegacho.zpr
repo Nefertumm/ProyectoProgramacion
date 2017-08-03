@@ -13,7 +13,7 @@ version_required=20140318
 custom_tabs=0
 tab_use_spaces=0
 explorer_path=
-current_source=Jugador.cpp
+current_source=Proyectil.hpp
 path_char=\
 [source]
 path=main.cpp
@@ -34,7 +34,7 @@ cursor=74:45
 open=true
 [source]
 path=ZonaBoss.cpp
-cursor=245:19
+cursor=210:55
 open=true
 [source]
 path=Animaciones.cpp
@@ -55,7 +55,7 @@ cursor=9:27
 open=true
 [source]
 path=Boss.cpp
-cursor=11:36
+cursor=50:30
 open=true
 [source]
 path=Proyectil.cpp

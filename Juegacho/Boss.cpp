@@ -32,7 +32,7 @@ void Boss::Actualizar(float dt)
 {
 	if (phaseTimer.getElapsedTime().asSeconds() > 10 && phase == PHASE_NONE)
 		phase = PHASE_ONE;
-	else if (phaseTimer.getElapsedTime().asSeconds() > 20 && phase == PHASE_ONE)
+	else if (phaseTimer.getElapsedTime().asSeconds() > 30 && phase == PHASE_ONE)
 		phase = PHASE_TWO;
 	
 	switch(phase)

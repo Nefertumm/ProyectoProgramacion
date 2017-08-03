@@ -206,6 +206,11 @@ void ZonaBoss::ProcesarColisiones()
 			if (vec.y != 0)
 				itr_proy->setVelocity({itr_proy->getVelocidad().x, -itr_proy->getVelocidad().y});
 		
+		if(itr_proy->getPosition().y < 0.f)
+		{
+			itr_proy->setPosition({itr_proy->getPosition().x,0.f});
+			itr_proy->setVelocity({itr_proy->getVelocidad().x, -itr_proy->getVelocidad().y});
+		}
 		if (sat_test(jugador.getSprite(), itr_proy->getSprite()) && !jugador.isGod())
 			GameOver(score);
 	}
