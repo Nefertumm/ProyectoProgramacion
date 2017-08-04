@@ -33,7 +33,7 @@ protected:
 	std::vector<Proyectil*> proy;
 	sf::Clock timer, timerPlat, freezeTimer, freezeCdTimer;
 	float difProyPhaseNone, difProyPhaseTwo;
-	bool freezed, canFreeze;
+	bool freezed, canFreeze; sf::Texture textFreeze, textFreezeCd; sf::Sprite freezeSp;
 	float freezeDif;
 	
 public:

@@ -22,7 +22,7 @@ protected:
 	bool keyReleased;
 	
 	// Extras:
-	bool god, canBeAGod; sf::Clock godCd, godTime;
+	bool god, canBeAGod; sf::Clock godCd, godTime; sf::Texture textGod, textGodCd; sf::Sprite godSp;
 	
 	// Animaciones
 	Animaciones* anim;

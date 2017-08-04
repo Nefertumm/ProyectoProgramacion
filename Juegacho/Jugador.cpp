@@ -9,10 +9,16 @@ Jugador::Jugador() : isJumping(false), canDoubleJump(true), keyReleased(true), g
 		std::cerr << "No se pudo encontrar la textura" << std::endl;
 	if (!hitBoxText.loadFromFile("resources/hitBox.png"))
 		std::cerr << "No se pudo encontrar la textura" << std::endl;
+	if (!textGod.loadFromFile("resources/god.png"))
+		std::cerr << "No se pudo encontrar la textura de god" << std::endl;
+	if (!textGodCd.loadFromFile("resources/godCd.png"))
+		std::cerr << "No se pudo encontrar la textura de godCd" << std::endl;
 	
 	sprite.setTexture(texture);
 	
 	sprite.setPosition(0.0f, 550.f);
+	godSp.setPosition(35.f, 40.f);
+	godSp.setTexture(textGod);
 	
 	hitBox.setTexture(hitBoxText);
 	hitBox.setPosition(sf::Vector2f(sprite.getPosition().x + 15.f, sprite.getPosition().y));
@@ -35,6 +41,7 @@ void Jugador::Dibujar(sf::RenderWindow* wnd)
 {
 	wnd->draw(sprite);
 	wnd->draw(hitBox);
+	wnd->draw(godSp);
 }
 
 void Jugador::Actualizar(float dt)
@@ -71,7 +78,10 @@ void Jugador::Actualizar(float dt)
 	
 	// ******** Mecanica de Dios -- Inicio. ********
 	if (godCd.getElapsedTime().asSeconds() > 6 && canBeAGod == false)
+	{
 		canBeAGod = true;
+		godSp.setTexture(textGod);
+	}
 	if (godTime.getElapsedTime().asSeconds() > 2 && god == true)
 		god = false;
 	
@@ -81,6 +91,7 @@ void Jugador::Actualizar(float dt)
 		god = true;
 		canBeAGod = false;
 		godCd.restart();
+		godSp.setTexture(textGodCd);
 	}
 	// ******* Mecanica de Dios -- Final. ********
 	

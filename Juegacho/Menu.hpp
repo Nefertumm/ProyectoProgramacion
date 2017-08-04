@@ -14,6 +14,7 @@ protected:
 	sf::Text _mensajeMenu;
 	sf::Text _mensajeScore;
 	sf::Text _mensajeSalir;
+	sf::Text mensajeControles;
 	sf::Music _music;
 
 	

@@ -2,6 +2,7 @@
 #include <iostream>
 #include "ZonaBoss.hpp"
 #include "EscenaPuntuacion.hpp"
+#include "Controles.hpp"
 
 
 Menu::Menu(Game* game, RenderWindow* wnd): Escena(game, wnd) 
@@ -37,12 +38,20 @@ Menu::Menu(Game* game, RenderWindow* wnd): Escena(game, wnd)
 	_mensajeScore.setOrigin(_mensajeScore.getGlobalBounds().width/2.0f, _mensajeScore.getGlobalBounds().height/2.0f);
 	_mensajeScore.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/1.8f);
 	
+	mensajeControles.setFont(_fuente);
+	mensajeControles.setString("Presione la tecla C para ver los controles");
+	mensajeControles.setCharacterSize(26);
+	mensajeControles.setColor(Color::Red);
+	mensajeControles.setOrigin(mensajeControles.getGlobalBounds().width/2.0f, mensajeControles.getGlobalBounds().height/2.0f);
+	mensajeControles.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/1.6f);
+	
 	_mensajeSalir.setFont(_fuente);
 	_mensajeSalir.setString("Presione la tecla Escape para salir");
 	_mensajeSalir.setCharacterSize(26);
 	_mensajeSalir.setColor(Color::White);
 	_mensajeSalir.setOrigin(_mensajeSalir.getGlobalBounds().width/2.0f, _mensajeSalir.getGlobalBounds().height/2.0f);
-	_mensajeSalir.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/1.6f);
+	_mensajeSalir.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/1.4f);
+	
 }
 
 Menu::~Menu() { }
@@ -54,6 +63,7 @@ void Menu::Dibujar()
 	_wnd->draw(_mensajeMenu);
 	_wnd->draw(_mensajeScore);
 	_wnd->draw(_mensajeSalir);
+	_wnd->draw(mensajeControles);
 	
 	_wnd->display();
 }
@@ -63,6 +73,8 @@ void Menu::Actualizar(float dt)
 	if ((Keyboard::isKeyPressed(Keyboard::F) && Keyboard::isKeyPressed(Keyboard::Num1) && Keyboard::isKeyPressed(Keyboard::Num3)) ||
 		(Keyboard::isKeyPressed(Keyboard::F) && Keyboard::isKeyPressed(Keyboard::Numpad1) && Keyboard::isKeyPressed(Keyboard::Numpad3))) // Huevada in coming...
 		_game->CambiarEscena(new ZonaBoss(_game, _wnd));
+	if (Keyboard::isKeyPressed(Keyboard::C))
+		_game->CambiarEscena(new Controles(_game, _wnd));
 	if (Keyboard::isKeyPressed(Keyboard::X))
 		_game->CambiarEscena(new EscenaPuntuacion(_game, _wnd));
 	if (Keyboard::isKeyPressed(Keyboard::Escape))

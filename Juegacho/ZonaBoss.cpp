@@ -51,9 +51,15 @@ ZonaBoss::ZonaBoss(Game* game, sf::RenderWindow* wnd) : Escena(game, wnd), freez
 		std::cerr << "No se pudo cargar la textura del suelo" << std::endl;
 	if (!textFondo.loadFromFile("resources/fondo.jpg"))
 		std::cerr << "No se pudo cargar la textura del fondo" << std::endl;
+	if (!textFreeze.loadFromFile("resources/freeze.png"))
+		std::cerr << "No se pudo cargar la textura del freeze" << std::endl;
+	if (!textFreezeCd.loadFromFile("resources/freezeCd.png"))
+		std::cerr << "No se pudo cargar la textura del freeze" << std::endl;
 	score = 0;
 
 	fondo.setTexture(textFondo);
+	freezeSp.setPosition({ 0.f, 40.f });
+	freezeSp.setTexture(textFreezeCd);
 	ambiente.setVolume(70); 
 	ambiente.setLoop(true);
 	ambiente.play();
@@ -83,6 +89,7 @@ void ZonaBoss::Dibujar()
 	_wnd->draw(fondo);
 	_wnd->draw(textPuntaje);
 	_wnd->draw(suelo);
+	_wnd->draw(freezeSp);
 	jugador.Dibujar(_wnd);
 	boss.Dibujar(_wnd);
 	for(auto &itr_proy : proy)
@@ -234,6 +241,7 @@ void ZonaBoss::Actualizar(float dt)
 	{
 		freezeDif = 3;
 		canFreeze = true;
+		freezeSp.setTexture(textFreeze);
 	}
 	if (freezeTimer.getElapsedTime().asSeconds() > 3 && freezed == true)
 		freezed = false;
@@ -244,6 +252,7 @@ void ZonaBoss::Actualizar(float dt)
 		freezed = true;
 		freezeCdTimer.restart();
 		canFreeze = false;
+		freezeSp.setTexture(textFreezeCd);
 	}
 	if (freezed)
 		if (freezeDif > 1)
