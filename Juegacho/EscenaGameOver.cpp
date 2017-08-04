@@ -24,14 +24,14 @@ EscenaGameOver::EscenaGameOver(Game* game, sf::RenderWindow* wnd, int score) : E
 	_gameOver.setFont(_fuente);
 	_gameOver.setString("GAME OVER");
 	_gameOver.setCharacterSize(62);
-	_gameOver.setColor(Color::Red);
+	_gameOver.setFillColor(Color::Red);
 	_gameOver.setOrigin(_gameOver.getGlobalBounds().width/2.0f, _gameOver.getGlobalBounds().height/2.0f);
 	_gameOver.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/4.0f);
 	
 	_ingresarTexto.setFont(_fuente);
 	_ingresarTexto.setString("Ingrese su nombre: ");
 	_ingresarTexto.setCharacterSize(48);
-	_ingresarTexto.setColor(Color::Blue);
+	_ingresarTexto.setFillColor(Color::Blue);
 	_ingresarTexto.setOrigin(_ingresarTexto.getGlobalBounds().width/2.0f, _ingresarTexto.getGlobalBounds().height/2.0f);
 	_ingresarTexto.setPosition(wnd->getSize().x/4.0f, wnd->getSize().y/2.5f);
 }

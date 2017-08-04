@@ -65,7 +65,7 @@ ZonaBoss::ZonaBoss(Game* game, sf::RenderWindow* wnd) : Escena(game, wnd), freez
 	ambiente.play();
 	
 	textPuntaje.setFont(fuentePuntaje);
-	textPuntaje.setColor(Color::Black);
+	textPuntaje.setFillColor(Color::Black);
 	srand(time(nullptr));
 	
 	suelo.setTexture(textSuelo);

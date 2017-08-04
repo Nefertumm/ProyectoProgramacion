@@ -20,35 +20,35 @@ Menu::Menu(Game* game, RenderWindow* wnd): Escena(game, wnd)
 	_mensajeTitulo.setFont(_fuente);
 	_mensajeTitulo.setString("Injusticia hecha juego");
 	_mensajeTitulo.setCharacterSize(62);
-	_mensajeTitulo.setColor(Color::White);
+	_mensajeTitulo.setFillColor(Color::White);
 	_mensajeTitulo.setOrigin(_mensajeTitulo.getGlobalBounds().width/2.0f, _mensajeTitulo.getGlobalBounds().height/2.0f);
 	_mensajeTitulo.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/4.0f);
 	
 	_mensajeMenu.setFont(_fuente);
 	_mensajeMenu.setString("Presione la tecla F(sqrt(169)) para empezar");
 	_mensajeMenu.setCharacterSize(32);
-	_mensajeMenu.setColor(Color::Red);
+	_mensajeMenu.setFillColor(Color::Red);
 	_mensajeMenu.setOrigin(_mensajeMenu.getGlobalBounds().width/2.0f, _mensajeMenu.getGlobalBounds().height/2.0f);
 	_mensajeMenu.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/2.0f);
 	
 	_mensajeScore.setFont(_fuente);
 	_mensajeScore.setString("Presione la tecla X para ver las puntuaciones");
 	_mensajeScore.setCharacterSize(26);
-	_mensajeScore.setColor(Color::Red);
+	_mensajeScore.setFillColor(Color::Red);
 	_mensajeScore.setOrigin(_mensajeScore.getGlobalBounds().width/2.0f, _mensajeScore.getGlobalBounds().height/2.0f);
 	_mensajeScore.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/1.8f);
 	
 	mensajeControles.setFont(_fuente);
 	mensajeControles.setString("Presione la tecla C para ver los controles");
 	mensajeControles.setCharacterSize(26);
-	mensajeControles.setColor(Color::Red);
+	mensajeControles.setFillColor(Color::Red);
 	mensajeControles.setOrigin(mensajeControles.getGlobalBounds().width/2.0f, mensajeControles.getGlobalBounds().height/2.0f);
 	mensajeControles.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/1.6f);
 	
 	_mensajeSalir.setFont(_fuente);
 	_mensajeSalir.setString("Presione la tecla Escape para salir");
 	_mensajeSalir.setCharacterSize(26);
-	_mensajeSalir.setColor(Color::White);
+	_mensajeSalir.setFillColor(Color::White);
 	_mensajeSalir.setOrigin(_mensajeSalir.getGlobalBounds().width/2.0f, _mensajeSalir.getGlobalBounds().height/2.0f);
 	_mensajeSalir.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/1.4f);
 	

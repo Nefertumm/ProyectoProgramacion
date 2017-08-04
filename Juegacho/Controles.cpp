@@ -9,42 +9,42 @@ Controles::Controles(Game* game, sf::RenderWindow* wnd) : Escena(game, wnd)
 	controles.setFont(fuente);
 	controles.setString("Controles");
 	controles.setCharacterSize(62);
-	controles.setColor(Color::White);
+	controles.setFillColor(Color::White);
 	controles.setOrigin(controles.getGlobalBounds().width/2.0f, controles.getGlobalBounds().height/2.0f);
 	controles.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/10.f);
 	
 	up.setFont(fuente);
 	up.setString("Presione ^ para saltar (y nuevamente para salto doble)");
 	up.setCharacterSize(32);
-	up.setColor(Color::Red);
+	up.setFillColor(Color::Red);
 	up.setOrigin(up.getGlobalBounds().width/2.0f, up.getGlobalBounds().height/2.0f);
 	up.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/2.6f);
 	
 	right.setFont(fuente);
 	right.setString("Presione -> para moverse a la derecha");
 	right.setCharacterSize(32);
-	right.setColor(Color::Red);
+	right.setFillColor(Color::Red);
 	right.setOrigin(right.getGlobalBounds().width/2.0f, right.getGlobalBounds().height/2.0f);
 	right.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/2.3f);
 	
 	left.setFont(fuente);
 	left.setString("Presione <- para moverse a la izquierda");
 	left.setCharacterSize(32);
-	left.setColor(Color::Red);
+	left.setFillColor(Color::Red);
 	left.setOrigin(left.getGlobalBounds().width/2.0f, left.getGlobalBounds().height/2.0f);
 	left.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/2.f);
 	
 	freeze.setFont(fuente);
 	freeze.setString("Presione la tecla F para ralentizar el tiempo");
 	freeze.setCharacterSize(32);
-	freeze.setColor(Color::Red);
+	freeze.setFillColor(Color::Red);
 	freeze.setOrigin(freeze.getGlobalBounds().width/2.0f, freeze.getGlobalBounds().height/2.0f);
 	freeze.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/1.7f);
 	
 	god.setFont(fuente);
 	god.setString("Presione la tecla G para hacerse invencible");
 	god.setCharacterSize(32);
-	god.setColor(Color::Red);
+	god.setFillColor(Color::Red);
 	god.setOrigin(god.getGlobalBounds().width/2.0f, god.getGlobalBounds().height/2.0f);
 	god.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/1.5f);
 	
@@ -52,7 +52,7 @@ Controles::Controles(Game* game, sf::RenderWindow* wnd) : Escena(game, wnd)
 	volver.setFont(fuente);
 	volver.setString("Presione la tecla Z nuevamente para volver al menu");
 	volver.setCharacterSize(32);
-	volver.setColor(Color::White);
+	volver.setFillColor(Color::White);
 	volver.setOrigin(volver.getGlobalBounds().width/2.0f, volver.getGlobalBounds().height/2.0f);
 	volver.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/1.1f);
 }

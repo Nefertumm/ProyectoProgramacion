@@ -12,7 +12,7 @@ EscenaPuntuacion::EscenaPuntuacion(Game* game, sf::RenderWindow* wnd) : Escena(g
 	_tituloPuntuaciones.setFont(_fuente);
 	_tituloPuntuaciones.setString("Tabla de puntuaciones");
 	_tituloPuntuaciones.setCharacterSize(76);
-	_tituloPuntuaciones.setColor(Color::Blue);
+	_tituloPuntuaciones.setFillColor(Color::Blue);
 	_tituloPuntuaciones.setOrigin(_tituloPuntuaciones.getGlobalBounds().width/2.0f, _tituloPuntuaciones.getGlobalBounds().height/2.0f);
 	_tituloPuntuaciones.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/8.0f);
 	
@@ -30,14 +30,14 @@ EscenaPuntuacion::EscenaPuntuacion(Game* game, sf::RenderWindow* wnd) : Escena(g
 	_textPuntuaciones.setFont(_fuente);
 	_textPuntuaciones.setString(str);
 	_textPuntuaciones.setCharacterSize(32);
-	_textPuntuaciones.setColor(Color::Red);
+	_textPuntuaciones.setFillColor(Color::Red);
 	_textPuntuaciones.setOrigin(_textPuntuaciones.getGlobalBounds().width/2.0f, _textPuntuaciones.getGlobalBounds().height/2.0f);
 	_textPuntuaciones.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/2.f);
 	
 	_volverMenu.setFont(_fuente);
 	_volverMenu.setString("Presione la tecla Z nuevamente para volver al menu");
 	_volverMenu.setCharacterSize(32);
-	_volverMenu.setColor(Color::Red);
+	_volverMenu.setFillColor(Color::Red);
 	_volverMenu.setOrigin(_volverMenu.getGlobalBounds().width/2.0f, _volverMenu.getGlobalBounds().height/2.0f);
 	_volverMenu.setPosition(wnd->getSize().x/2.0f, wnd->getSize().y/1.1f);
 }
